@@ -1,0 +1,30 @@
+PODS:
+  - Alamofire (5.3.0)
+  - SDWebImage (5.9.3):
+    - SDWebImage/Core (= 5.9.3)
+  - SDWebImage/Core (5.9.3)
+  - SwiftyJSON (4.3.0)
+  - UICircularProgressRing (7.0.0)
+
+DEPENDENCIES:
+  - Alamofire (~> 5.2)
+  - SDWebImage
+  - SwiftyJSON (~> 4.0)
+  - UICircularProgressRing
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - SDWebImage
+    - SwiftyJSON
+    - UICircularProgressRing
+
+SPEC CHECKSUMS:
+  Alamofire: 2c792affbdc2f18016e08fdbcacd60aebe1ba593
+  SDWebImage: a31ee8e90a97303529e03fb0c333eae0eacb88e9
+  SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
+  UICircularProgressRing: 738b48db0ec1fbbd8482d727979392bb8c272e8d
+
+PODFILE CHECKSUM: 29e9e49918e0fc95a231adb4f4498639ed50a710
+
+COCOAPODS: 1.9.3
