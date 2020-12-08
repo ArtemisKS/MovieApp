@@ -74,6 +74,8 @@ class MainViewController: UIViewController, TableDesignable {
         setupSearchBar()
         setupTableView()
         registerLoaderCell()
+        hideBackButton()
+        setNavBarTitle("TMDB")
     }
     
     private func registerLoaderCell() {
@@ -93,6 +95,15 @@ class MainViewController: UIViewController, TableDesignable {
         searchController.hidesNavigationBarDuringPresentation = false
         
         searchController.searchBar.placeholder = "Search movies"
+    }
+    
+    private func hideBackButton() {
+        navigationItem.backBarButtonItem = UIBarButtonItem(
+                title: "", style: .plain, target: nil, action: nil)
+    }
+    
+    private func setNavBarTitle(_ title: String) {
+        self.title = title
     }
     
 }

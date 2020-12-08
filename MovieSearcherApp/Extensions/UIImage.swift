@@ -9,6 +9,7 @@ import UIKit
 
 enum Images: String, CaseIterable {
     case lordOrTheRings = "posterLOR"
+    case moviePosterPlaceholder = "moviePosterPlaceholder"
 }
 
 extension UIImage {

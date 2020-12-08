@@ -24,7 +24,13 @@ extension ImageLoader {
             return
         }
         
-        let url = "\(Globals.posterBaseURL)\(movie.poster_path)"
+        let placeholder: UIImage = .getImage(for: .moviePosterPlaceholder)
+        guard let posterPath = movie.poster_path else {
+            cell.cellImageView.image = placeholder
+            imagesDict[key] = placeholder
+            
+            return }
+        let url = "\(Globals.posterBaseURL)\(posterPath)"
         cell.cellImageView.sd_setImage(with: URL(string: url)) { (image, err, _, _) in
             if err == nil && image != nil {
                 self.imagesDict[key] = image

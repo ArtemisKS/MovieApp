@@ -12,7 +12,7 @@ struct MovieDetail: Decodable {
     struct Collection: Decodable {
         let id: UInt64
         let name: String
-        let poster_path: String
+        let poster_path: String?
         let backdrop_path: String
     }
     
@@ -51,7 +51,7 @@ struct MovieDetail: Decodable {
     let original_title: String
     let overview: String
     let popularity: Double
-    let poster_path: String
+    let poster_path: String?
     let production_companies: [ProductionCompany]
     let production_countries: [ProductionCountry]
     let release_date: String

@@ -24,6 +24,7 @@ class DetailViewController: UIViewController {
     @IBOutlet var bottomInfoLabels: [UILabel]!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var upperViewHeightConstr: NSLayoutConstraint!
     private var posterImage: UIImage?
     
@@ -81,6 +82,7 @@ class DetailViewController: UIViewController {
         setupView()
         presenter?.onViewLoaded()
         setNavBarTitle("Movie detail")
+        scrollView.delegate = self
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -104,6 +106,15 @@ class DetailViewController: UIViewController {
 //        presenter.tapOnData()
 //    }
     
+}
+
+extension DetailViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > 0 {
+            scrollView.contentOffset = CGPoint(x: scrollView.contentOffset.x, y: 0)
+        }
+    }
 }
 
 extension DetailViewController: DetailViewProtocol {
@@ -156,7 +167,11 @@ extension DetailViewController: DetailViewProtocol {
         posterImageView.image = posterImage
         if let movie = movie,
            posterImage == nil {
-            let url = "\(Globals.posterBaseURL)\(movie.poster_path)"
+            guard let posterPath = movie.poster_path else {
+                posterImageView.image = .getImage(for: .moviePosterPlaceholder)
+                return
+            }
+            let url = "\(Globals.posterBaseURL)\(posterPath)"
             posterImageView.sd_setImage(with: URL(string: url))
         }
     }
