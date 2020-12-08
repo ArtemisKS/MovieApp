@@ -8,14 +8,15 @@
 import UIKit
 
 protocol AssemblerBuilderProtocol {
-  func createDetailController(router: RouterProtocol) -> UIViewController
+    func createDetailController(data: MovieModel, router: RouterProtocol) -> UIViewController
   func createMainController(router: RouterProtocol) -> UIViewController
 }
 
 class AssemblerBuilder: AssemblerBuilderProtocol {
-  func createDetailController(router: RouterProtocol) -> UIViewController {
+    
+  func createDetailController(data: MovieModel, router: RouterProtocol) -> UIViewController {
     let view = DetailViewController.loadFromNib()
-    let presenter = DetailPresenter(view: view, router: router)
+    let presenter = DetailPresenter(data: data, view: view, router: router)
     view.presenter = presenter
     return view
   }

@@ -15,7 +15,7 @@ protocol RouterFirst {
 
 protocol RouterProtocol: RouterFirst {
   func setInitialViewController()
-//  func showDetail(with data: [MovieModel]?)
+  func showDetail(with data: MovieModel)
   func popToRoot()
 }
 
@@ -35,12 +35,12 @@ class Router: RouterProtocol {
     }
   }
   
-//  func showDetail(with data: [MovieModel]?) {
-//    if let navigationController = navigationController {
-//      guard let firstVC = assembler?.createMainController(data: data, router: self) else { return }
-//      navigationController.pushViewController(firstVC, animated: true)
-//    }
-//  }
+  func showDetail(with data: MovieModel) {
+    if let navigationController = navigationController {
+      guard let firstVC = assembler?.createDetailController(data: data, router: self) else { return }
+      navigationController.pushViewController(firstVC, animated: true)
+    }
+  }
   
   func popToRoot() {
     if let navigationController = navigationController {

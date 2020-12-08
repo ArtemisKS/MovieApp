@@ -25,13 +25,16 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if self.cellModels[indexPath.row].reuseIdentifier == String(describing: MovieTableViewCell.self) {
-//            presenter.didSelectMoreButton()
+        let index = indexPath.row
+        tableView.deselectRow(at: indexPath, animated: true)
+        if self.cellModels[index].reuseIdentifier == String(describing: MovieTableViewCell.self) {
+            presenter.didTapOnCell(index: index)
         }
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard !cellModels.isEmpty && indexPath.row == cellModels.count - 1 else { return }
+        guard !cellModels.isEmpty &&
+                indexPath.row == cellModels.count - 1 else { return }
         showSpinner()
         presenter.onScrolledToBottom()
     }
@@ -44,8 +47,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         spinner.startAnimating()
         tableView.tableFooterView = spinner
     }
-    
-//    private func 
 }
 
 //extension DetailViewController: UITableViewDelegate {

@@ -16,34 +16,6 @@ enum ListState<T> {
     case error(Error?)
 }
 
-@propertyWrapper
-struct Atomic<Value> {
-
-    private var value: Value
-    private let lock = NSLock()
-
-    init(wrappedValue value: Value) {
-        self.value = value
-    }
-
-    var wrappedValue: Value {
-      get { return load() }
-      set { store(newValue: newValue) }
-    }
-
-    private func load() -> Value {
-        lock.lock()
-        defer { lock.unlock() }
-        return value
-    }
-
-    private mutating func store(newValue: Value) {
-        lock.lock()
-        defer { lock.unlock() }
-        value = newValue
-    }
-}
-
 enum BasicError: Error {
     case withCode(Int)
     case withMessage(String)
@@ -61,6 +33,7 @@ protocol MainViewPresenterProtocol: class {
     
     func onViewDidLoad()
     func onScrolledToBottom()
+    func didTapOnCell(index: Int)
     func save()
     func fetchIcon(for cell: ImageViewCell, index: Int)
 }
@@ -116,6 +89,12 @@ class MainPresenter: MainViewPresenterProtocol {
     func onScrolledToBottom() {
         Pages.maxPageNum += 1
         self.fetchUpdate(fetchCase: .loadMore)
+    }
+    
+    func didTapOnCell(index: Int) {
+        if let movie = movies?[index] {
+            router.showDetail(with: movie)
+        }
     }
     
     private func fetchUpdate(fetchCase: FetchCase) {
