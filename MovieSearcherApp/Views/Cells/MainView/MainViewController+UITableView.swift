@@ -29,6 +29,23 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 //            presenter.didSelectMoreButton()
         }
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard !cellModels.isEmpty && indexPath.row == cellModels.count - 1 else { return }
+        showSpinner()
+        presenter.onScrolledToBottom()
+    }
+    
+    
+    private func showSpinner() {
+        let spinner = UIActivityIndicatorView(style: .medium)
+        spinner.color = .customBlue
+        spinner.frame = CGRect(x: 0.0, y: 0.0, width: tableView.bounds.width, height: 70)
+        spinner.startAnimating()
+        tableView.tableFooterView = spinner
+    }
+    
+//    private func 
 }
 
 //extension DetailViewController: UITableViewDelegate {

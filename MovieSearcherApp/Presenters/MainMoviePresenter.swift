@@ -52,6 +52,7 @@ enum BasicError: Error {
 protocol MainViewPresenterProtocol: class {
     
     var dataLoaded: Bool { get }
+    var curMaxPage: Int { get }
     
     init(
         movieService: MovieServiceProtocol,
@@ -59,6 +60,7 @@ protocol MainViewPresenterProtocol: class {
         router: RouterProtocol)
     
     func onViewDidLoad()
+    func onScrolledToBottom()
     func save()
     func fetchIcon(for cell: ImageViewCell, index: Int)
 }
@@ -70,12 +72,31 @@ class MainPresenter: MainViewPresenterProtocol {
     var router: RouterProtocol
     
     private let cellFactory = DBTransactionCellModelsFactory()
-    private var pageNum: Int = 1
     private var postersDict: [UInt64 : UIImage] = [:]
     @Atomic private var movies: [MovieModel]?
     
     var dataLoaded: Bool {
         movies != nil
+    }
+    
+    var curMaxPage: Int {
+        Pages.maxPageNum
+    }
+    
+    private struct Pages {
+        static var maxLoadedPage: Int = 1
+        static var maxPageNum: Int = 1
+        static var minPageNum: Int = 1
+        
+        static func setMaxPages(page: Int) {
+            maxPageNum = page
+            maxLoadedPage = page + 1
+        }
+    }
+    
+    private enum FetchCase {
+        case reload
+        case loadMore
     }
     
     required init(
@@ -89,38 +110,54 @@ class MainPresenter: MainViewPresenterProtocol {
     }
     
     func onViewDidLoad() {
-        fetchMovies { (error) in
-            self.updateView(with: error)
+        fetchUpdate(fetchCase: .reload)
+    }
+    
+    func onScrolledToBottom() {
+        Pages.maxPageNum += 1
+        self.fetchUpdate(fetchCase: .loadMore)
+    }
+    
+    private func fetchUpdate(fetchCase: FetchCase) {
+        fetchMovies { [weak self] (movies, error) in
+            DispatchQueue.main.async {
+                let movies: [MovieModel]? = fetchCase == .loadMore ?
+                    movies : nil
+                self?.updateView(with: error, loadedMoreMovies: movies)
+            }
         }
     }
     
-    private func updateView(with error: Error?) {
+    private func updateView(with error: Error?, loadedMoreMovies: [MovieModel]?) {
         if let error = error {
             view?.handleStateChange(.error(error))
         } else {
-            let cellModels = makeCellModels()
-            view?.handleStateChange(.initial(items: cellModels))
+            var cellModels: [CellModeling]
+            if let movies = loadedMoreMovies {
+                cellModels = getCellModels(from: movies)
+                view?.handleStateChange(.loadedMore(items: cellModels))
+            } else {
+                cellModels = makeCellModels()
+                view?.handleStateChange(.initial(items: cellModels))
+            }
         }
     }
     
-    private func fetchMovies(completion: @escaping (Error?) -> Void) {
+    private func fetchMovies(completion: @escaping ([MovieModel], Error?) -> Void) {
         
         let group = DispatchGroup()
         var error: Error?
         
         var pageLoaded = -1
+        var movies: [MovieModel] = []
         
-        for page in 1...pageNum {
+        for page in Pages.maxLoadedPage...curMaxPage {
             group.enter()
             movieService.getMovies(page: page) { (result) in
                 switch result {
                 case .success(let data):
                     pageLoaded = max(pageLoaded, data.page)
-                    if self.movies == nil {
-                        self.movies = data.results
-                    } else {
-                        self.movies?.append(contentsOf: data.results)
-                    }
+                    movies.append(contentsOf: data.results)
                 case .failure(let err):
                     error = err
                 }
@@ -130,13 +167,14 @@ class MainPresenter: MainViewPresenterProtocol {
         
         func checkForPageNumError() -> Error? {
             var resErr: Error?
-            if pageLoaded < pageNum {
-                let pages: [Int] = .init(pageLoaded...pageNum)
+            if pageLoaded < curMaxPage {
+                let pages = pageLoaded...curMaxPage
                 resErr = BasicError.withMessage(
                     """
                     Couldn't load page\(pages.count > 1 ? "s" : "") \(pages.enumerated().map { $0 == pages.count - 1 ? "\($1), " : "\($1)" })
                     """)
             }
+            Pages.setMaxPages(page: pageLoaded)
             return resErr
         }
         
@@ -147,7 +185,14 @@ class MainPresenter: MainViewPresenterProtocol {
                 if resErr == nil {
                     resErr = checkForPageNumError()
                 }
-                completion(resErr)
+                if resErr == nil {
+                    if self.movies == nil {
+                        self.movies = movies
+                    } else {
+                        self.movies?.append(contentsOf: movies)
+                    }
+                }
+                completion(movies, resErr)
             })
     }
     
@@ -162,6 +207,10 @@ class MainPresenter: MainViewPresenterProtocol {
         }
         
         return cellModels
+    }
+    
+    private func getCellModels(from movies: [MovieModel]) -> [CellModeling] {
+        movies.map { cellFactory.movieCellModel(title: $0.title) }
     }
     
     func fetchIcon(for cell: ImageViewCell, index: Int) {

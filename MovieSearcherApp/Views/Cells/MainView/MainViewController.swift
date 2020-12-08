@@ -15,7 +15,7 @@ protocol MainViewProtocol: class {
 
 class MainViewController: UIViewController, TableDesignable {
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private(set) weak var tableView: UITableView!
     
     var presenter: MainViewPresenterProtocol!
     
@@ -39,6 +39,10 @@ class MainViewController: UIViewController, TableDesignable {
       footerLabel.isHidden = true
       view.addSubview(footerLabel)
       return footerLabel
+    }()
+    
+    private(set) lazy var footerView: UIView = {
+        UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 60))
     }()
     
     var cellModels: [CellModeling] = [] {
@@ -98,6 +102,7 @@ extension MainViewController: MainViewProtocol {
     private var sectionNum: Int { 0 }
     
     func handleStateChange(_ state: ListState<CellModeling>) {
+        tableView.tableFooterView = footerView
         switch state {
         case let .initial(cellModels), let .updated(cellModels):
             self.cellModels = cellModels
@@ -117,13 +122,11 @@ extension MainViewController: MainViewProtocol {
         case let .error(error):
             break
         case let .loadedMore(cellModels):
+            let startIndPath = self.cellModels.count - 1
             self.cellModels.append(contentsOf: cellModels)
-            let startIndPath = self.cellModels.count
             let indexPaths: [IndexPath] = cellModels.enumerated().map { ind, _ in IndexPath(row: startIndPath + ind, section: self.sectionNum) }
             self.tableView.performBatchUpdates({
                 self.tableView.insertRows(at: indexPaths, with: .automatic)
-            }, completion: { [weak self] _ in
-                self?.tableView.setContentOffset(.zero, animated: false)
             })
         }
     }
@@ -144,6 +147,7 @@ private extension MainViewController {
 //        tableView.bounces = false
 //        tableView.showsVerticalScrollIndicator = false
         tableView.allowsSelection = true
+        tableView.tableFooterView = footerView
         updateRowHeight()
     }
     
