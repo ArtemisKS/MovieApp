@@ -16,6 +16,9 @@ protocol DetailViewProtocol: class {
 }
 
 protocol DetailViewPresenterProtocol: class {
+    
+    var movieData: MovieModel { get }
+    
     init(
         data: MovieModel,
         movieService: MovieServiceProtocol,
@@ -33,6 +36,10 @@ class DetailPresenter: DetailViewPresenterProtocol {
     weak var view: DetailViewProtocol?
     var router: RouterProtocol
     private var movie: MovieDetail?
+    
+    var movieData: MovieModel {
+        data
+    }
     
     required init(
         data: MovieModel,

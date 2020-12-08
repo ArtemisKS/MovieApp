@@ -19,12 +19,53 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var overviewDescLabel: UILabel!
     @IBOutlet weak var bottomContView: UIView!
     
+    @IBOutlet weak var languageStack: UIStackView!
     @IBOutlet weak var revenueStack: UIStackView!
     @IBOutlet var bottomInfoLabels: [UILabel]!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var upperViewHeightConstr: NSLayoutConstraint!
     private var posterImage: UIImage?
+    
+    private lazy var errorView: UIView = {
+        
+        let title = UILabel()
+        title.text = "Sorry, an error occured"
+        title.font = .systemFont(ofSize: 17, weight: .bold)
+        title.numberOfLines = 0
+        title.sizeToFit()
+        
+        let subtitle = UILabel()
+        subtitle.text = "Could not load the data for movie \(presenter.movieData.title)"
+        subtitle.font = .systemFont(ofSize: 12)
+        subtitle.textColor = .init(red: 0.337, green: 0.337, blue: 0.443, alpha: 1)
+        subtitle.numberOfLines = 0
+        subtitle.textAlignment = .center
+        
+        let sv = UIStackView(arrangedSubviews: [title, subtitle])
+        sv.axis = .vertical
+        sv.spacing = 8
+        
+        let container = UIView()
+        container.backgroundColor = .white
+        container.addSubview(sv)
+        view.addSubview(container)
+        
+        for view in [container, sv] {
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        let leadAnchorConst: CGFloat = (view.frame.width - title.frame.width) / 2
+        
+        NSLayoutConstraint.activate([
+            sv.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+            sv.centerYAnchor.constraint(equalTo: container.centerYAnchor),
+            sv.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: leadAnchorConst),
+            sv.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -leadAnchorConst)
+        ])
+        
+        return container
+    }()
     
     private enum BotLabels: Int, CaseIterable {
         case date = 0
@@ -71,13 +112,28 @@ extension DetailViewController: DetailViewProtocol {
         posterImage = image
     }
     
+    private func setupNoOperViewConstr(_ container: UIView) {
+        
+        NSLayoutConstraint.activate([
+            container.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            container.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            container.topAnchor.constraint(equalTo: view.topAnchor),
+            container.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+    }
+    
     func updateView(with movie: MovieDetail?, error: Error?) {
         
         setupPosterImage(with: movie)
         
         guard let movie = movie else {
             if let error = error {
-                // TODO: - show error
+                self.showAlert(title: "Error", message: error.localizedDescription, completion:  { [weak self] in
+                    guard let self = self else { return }
+                    self.activityIndicator.stopAnimating()
+                    self.errorView.isHidden = false
+                    self.setupNoOperViewConstr(self.errorView)
+                })
             }
             return
         }
@@ -112,8 +168,10 @@ extension DetailViewController: DetailViewProtocol {
     }
     
     private func setLanguages(_ label: UILabel, from langs: [MovieDetail.SpokenLanguage]) {
-        label.text = langs.enumerated().map { $0 == langs.count - 1 ? $1.english_name : "\($1.english_name), "
+        let text = langs.enumerated().map { $0 == langs.count - 1 ? $1.english_name : "\($1.english_name), "
         }.joined()
+        label.text = text
+        languageStack.isHidden = text.isEmpty
     }
     
     private func setRevenue(_ label: UILabel, revenue: UInt64) {

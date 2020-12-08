@@ -20,4 +20,31 @@ extension UIViewController {
         
         return instantiateFromNib()
     }
+    
+    //MARK: -  Alert with OK button
+    func showAlert(
+        title: String?,
+        message: String?,
+        okAction: (() -> Void)? = nil,
+        completion: (() -> Void)? = nil) {
+      
+      let alertController = UIAlertController(
+        title: title,
+        message: message,
+        preferredStyle: .alert)
+        
+      let OKAction = UIAlertAction(
+        title: "ОК",
+        style: .default,
+        handler: { (action) in
+          if let okAction = okAction {
+            okAction()
+          }
+      })
+      alertController.addAction(OKAction)
+      
+      DispatchQueue.main.async {
+        self.present(alertController, animated: true, completion: completion)
+      }
+    }
 }
