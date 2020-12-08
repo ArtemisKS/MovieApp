@@ -120,7 +120,8 @@ extension DetailViewController: DetailViewProtocol {
         guard revenue != 0 else { revenueStack.isHidden = true; return }
         revenueStack.isHidden = false
         let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
+        numberFormatter.numberStyle = .currency
+        numberFormatter.currencySymbol = "$"
         let formattedNumber = numberFormatter.string(from: NSNumber(value: revenue))
         label.text = formattedNumber
     }
