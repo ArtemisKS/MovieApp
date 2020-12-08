@@ -93,7 +93,7 @@ class MainPresenter: MainViewPresenterProtocol {
     
     func didTapOnCell(index: Int) {
         if let movie = movies?[index] {
-            router.showDetail(with: movie)
+            router.showDetail(with: movie, and: imagesDict[movie.id])
         }
     }
     

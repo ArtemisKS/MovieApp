@@ -9,6 +9,10 @@ import UIKit
 
 extension UIColor {
     
+    class var mainBlue: UIColor {
+        .init(red: 0.1, green: 0.64, blue: 0.94, alpha: 1)
+    }
+    
     class var customBlue: UIColor {
         .getColor(r: 89, g: 151, b: 227)
     }

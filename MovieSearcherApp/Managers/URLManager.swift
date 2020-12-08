@@ -12,8 +12,4 @@ struct URLManager {
     static var baseURL: String {
         "https://api.themoviedb.org/3/movie"
     }
-    
-    static func getMovieUrl(with movieId: String) -> String {
-        "https://api.themoviedb.org/3/movie/\(movieId))?api_key=\(Globals.apiKey)&language=en-US"
-    }
 }

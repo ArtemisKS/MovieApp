@@ -33,7 +33,7 @@
             startingLineNumber = "135"
             endingLineNumber = "135"
             landmarkName = "fetchMovies(completion:)"
-            landmarkType = "9">
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "A6E50595-1104-4F9D-9F7E-759079C942A1 - 9e320355c5580c99"
@@ -81,7 +81,7 @@
             startingLineNumber = "160"
             endingLineNumber = "160"
             landmarkName = "fetchMovies(completion:)"
-            landmarkType = "9">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -97,7 +97,7 @@
             startingLineNumber = "163"
             endingLineNumber = "163"
             landmarkName = "fetchMovies(completion:)"
-            landmarkType = "9">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -120,7 +120,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "3745E859-961E-4493-A6E1-8C96CE0F674D"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MovieSearcherApp/Views/Cells/MainView/MainViewController.swift"
@@ -225,7 +225,7 @@
             startingLineNumber = "130"
             endingLineNumber = "130"
             landmarkName = "fetchMovies(completion:)"
-            landmarkType = "9">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -256,7 +256,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "158"
             endingLineNumber = "158"
-            landmarkName = "fetchMovies(completion:)"
+            landmarkName = "checkForPageNumError()"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -273,7 +273,7 @@
             startingLineNumber = "139"
             endingLineNumber = "139"
             landmarkName = "fetchMovies(completion:)"
-            landmarkType = "9">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -289,7 +289,7 @@
             startingLineNumber = "134"
             endingLineNumber = "134"
             landmarkName = "fetchMovies(completion:)"
-            landmarkType = "9">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -305,7 +305,7 @@
             startingLineNumber = "167"
             endingLineNumber = "167"
             landmarkName = "fetchMovies(completion:)"
-            landmarkType = "9">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -321,7 +321,7 @@
             startingLineNumber = "168"
             endingLineNumber = "168"
             landmarkName = "fetchMovies(completion:)"
-            landmarkType = "9">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -337,7 +337,7 @@
             startingLineNumber = "171"
             endingLineNumber = "171"
             landmarkName = "fetchMovies(completion:)"
-            landmarkType = "9">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -353,7 +353,7 @@
             startingLineNumber = "116"
             endingLineNumber = "116"
             landmarkName = "updateView(with:loadedMoreMovies:)"
-            landmarkType = "9">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -369,7 +369,7 @@
             startingLineNumber = "117"
             endingLineNumber = "117"
             landmarkName = "updateView(with:loadedMoreMovies:)"
-            landmarkType = "9">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -385,6 +385,22 @@
             startingLineNumber = "126"
             endingLineNumber = "126"
             landmarkName = "handleStateChange(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5A81B81D-7CB2-4DE8-AB94-F40D226FE4B1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieSearcherApp/Networking/Services/MovieService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "processGetRequest(request:respType:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

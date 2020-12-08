@@ -5,29 +5,43 @@
 //  Created by Artem Kupriianets on 07.12.2020.
 //
 
-import Foundation
+import UIKit
 
 protocol DetailViewProtocol: class {
-    func setupButton(with title: String)
-    func setupDataLabel(with title: String)
+    func updateView(
+        with movie: MovieDetail?,
+        error: Error?)
+    
+    func setPoster(_ image: UIImage?)
 }
 
 protocol DetailViewPresenterProtocol: class {
-    init(data: MovieModel, view: DetailViewProtocol, router: RouterProtocol)
+    init(
+        data: MovieModel,
+        movieService: MovieServiceProtocol,
+        view: DetailViewProtocol,
+        router: RouterProtocol)
     //  var data: [MovieModel]? { get set }
+    func onViewLoaded()
     func tapOnData()
-    func setupView()
 }
 
 class DetailPresenter: DetailViewPresenterProtocol {
     
-    private var data: MovieModel
+    private let data: MovieModel
+    private let movieService: MovieServiceProtocol
     weak var view: DetailViewProtocol?
-    var router: RouterProtocol?
-    //  var data: [MovieModel]?
+    var router: RouterProtocol
+    private var movie: MovieDetail?
     
-    required init(data: MovieModel, view: DetailViewProtocol, router: RouterProtocol) {
+    required init(
+        data: MovieModel,
+        movieService: MovieServiceProtocol,
+        view: DetailViewProtocol,
+        router: RouterProtocol) {
+        
         self.data = data
+        self.movieService = movieService
         self.view = view
         self.router = router
     }
@@ -36,11 +50,22 @@ class DetailPresenter: DetailViewPresenterProtocol {
         //    router?.showDetail(with: data)
     }
     
-    func setupView() {
-        //    let labelTitle = confLabelTitle()
-        //    view?.setupButton(with: data != nil
-        //      ? "Изменить фильтры" : "Выбрать фильтры")
-        //    view?.setupDataLabel(with: labelTitle)
+    func onViewLoaded() {
+        fetchMovie { (error) in
+            self.view?.updateView(with: self.movie, error: error)
+        }
+    }
+    
+    private func fetchMovie(completion: @escaping (Error?) -> Void) {
+        movieService.getMovieDetails(id: "\(data.id)") { (result) in
+            switch result {
+            case .success(let data):
+                self.movie = data
+                completion(nil)
+            case .failure(let error):
+                completion(error)
+            }
+        }
     }
     
 }

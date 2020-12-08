@@ -25,20 +25,20 @@ class MainViewController: UIViewController, TableDesignable {
     private let footerResLabelHeight: CGFloat = 40
     
     private lazy var footerResLabel: UILabel = {
-      let footerLabel = UILabel(frame:
-        CGRect(
-          origin: .zero,
-          size: CGSize(
-            width: view.frame.width,
-            height: footerResLabelHeight)))
-      
-      footerLabel.backgroundColor = Globals.mainColor
-      footerLabel.font = UIFont.systemFont(ofSize: 17)
-      footerLabel.textAlignment = .center
-      footerLabel.textColor = UIColor.systemWhite
-      footerLabel.isHidden = true
-      view.addSubview(footerLabel)
-      return footerLabel
+        let footerLabel = UILabel(frame:
+                                    CGRect(
+                                        origin: .zero,
+                                        size: CGSize(
+                                            width: view.frame.width,
+                                            height: footerResLabelHeight)))
+        
+        footerLabel.backgroundColor = .mainBlue
+        footerLabel.font = UIFont.systemFont(ofSize: 17)
+        footerLabel.textAlignment = .center
+        footerLabel.textColor = UIColor.systemWhite
+        footerLabel.isHidden = true
+        view.addSubview(footerLabel)
+        return footerLabel
     }()
     
     private(set) lazy var footerView: UIView = {
@@ -81,18 +81,18 @@ class MainViewController: UIViewController, TableDesignable {
     }
     
     private func setupSearchBar() {
-      
-      searchController.obscuresBackgroundDuringPresentation = false
-      navigationItem.searchController = searchController
-      definesPresentationContext = true
-      
-      searchController.searchResultsUpdater = self
-      searchController.searchBar.delegate = self
-      searchController.searchBar.searchTextField.clearButtonMode = .whileEditing
-
-      searchController.hidesNavigationBarDuringPresentation = false
-      
-      searchController.searchBar.placeholder = "Search movies"
+        
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.searchTextField.clearButtonMode = .whileEditing
+        
+        searchController.hidesNavigationBarDuringPresentation = false
+        
+        searchController.searchBar.placeholder = "Search movies"
     }
     
 }
@@ -107,11 +107,11 @@ extension MainViewController: MainViewProtocol {
         case let .initial(cellModels), let .updated(cellModels):
             self.cellModels = cellModels
             self.updateRowHeight()
-//            UIView.animate(withDuration: 0.25, animations: {
-//                self.tableView.alpha = 1
-//            }) { _ in
-//
-//            }
+            //            UIView.animate(withDuration: 0.25, animations: {
+            //                self.tableView.alpha = 1
+            //            }) { _ in
+            //
+            //            }
             self.tableView.performBatchUpdates({
                 self.tableView.reloadSections([self.sectionNum], with: .automatic)
             }, completion: { [weak self] _ in
@@ -144,8 +144,8 @@ private extension MainViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.estimatedRowHeight = 300
-//        tableView.bounces = false
-//        tableView.showsVerticalScrollIndicator = false
+        //        tableView.bounces = false
+        //        tableView.showsVerticalScrollIndicator = false
         tableView.allowsSelection = true
         tableView.tableFooterView = footerView
         updateRowHeight()
@@ -166,137 +166,137 @@ private extension MainViewController {
 extension MainViewController {
     
     var bottomSafeArea: CGFloat {
-      let window = UIApplication.shared.keyWindow
-      return window?.safeAreaInsets.bottom ?? 0
+        let window = UIApplication.shared.keyWindow
+        return window?.safeAreaInsets.bottom ?? 0
     }
     
     func addKeyboardObservers() {
-      
-      NotificationCenter.default.addObserver(
-        self,
-        selector: #selector(showKeyboard(_:)),
-        name: UIResponder.keyboardWillShowNotification,
-        object: nil)
-      NotificationCenter.default.addObserver(
-        self,
-        selector: #selector(hideKeyboard(_:)),
-        name: UIResponder.keyboardWillHideNotification,
-        object: nil)
-      
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showKeyboard(_:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(hideKeyboard(_:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil)
+        
     }
     
     func removeObservers() {
-      NotificationCenter.default.removeObserver(
-        self,
-        name: UIResponder.keyboardWillShowNotification,
-        object: nil)
-      NotificationCenter.default.removeObserver(
-        self,
-        name: UIResponder.keyboardWillHideNotification,
-        object: nil)
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil)
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil)
     }
     
     func getKeyboardHeightFrom(_ notification: Notification) -> CGFloat? {
-      if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-        let keyboardRectangle = keyboardFrame.cgRectValue
-        return keyboardRectangle.height
-      }
-      return nil
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            return keyboardRectangle.height
+        }
+        return nil
     }
     
     @objc func showKeyboard(_ notification: Notification) {
-      if let keyboardHeight = getKeyboardHeightFrom(notification) {
-        
-        footerResLabel.frame = getFooterLabelFrame(with: keyboardHeight)
-      }
+        if let keyboardHeight = getKeyboardHeightFrom(notification) {
+            
+            footerResLabel.frame = getFooterLabelFrame(with: keyboardHeight)
+        }
     }
     
     @objc func hideKeyboard(_ notification: Notification) {
-      footerResLabel.frame = getFooterLabelFrame()
+        footerResLabel.frame = getFooterLabelFrame()
     }
     
     func getFooterLabelFrame(with keyboardHeight: CGFloat? = nil) -> CGRect {
-      
-      let origin = CGPoint(
-        x: 0,
-        y: getFooterLabelY(with: keyboardHeight))
-      
-      let size = CGSize(
-        width: view.frame.width,
-        height: getFooterLabelHeight(with: keyboardHeight))
-      
-      return CGRect(origin: origin, size: size)
+        
+        let origin = CGPoint(
+            x: 0,
+            y: getFooterLabelY(with: keyboardHeight))
+        
+        let size = CGSize(
+            width: view.frame.width,
+            height: getFooterLabelHeight(with: keyboardHeight))
+        
+        return CGRect(origin: origin, size: size)
     }
     
     func getFooterLabelY(with keyboardHeight: CGFloat?) -> CGFloat {
-      let val = keyboardHeight ?? bottomSafeArea
-      return view.frame.height - footerResLabelHeight
-        - val
+        let val = keyboardHeight ?? bottomSafeArea
+        return view.frame.height - footerResLabelHeight
+            - val
     }
     
     func getFooterLabelHeight(with keyboardHeight: CGFloat?) -> CGFloat {
-      let val = keyboardHeight != nil ?
-        footerResLabelHeight : footerResLabelHeight + bottomSafeArea
-      return val
+        let val = keyboardHeight != nil ?
+            footerResLabelHeight : footerResLabelHeight + bottomSafeArea
+        return val
     }
     
     func filterSearchResults(from searchText: String) {
-      
-//      if !searchText.isEmpty {
-//        resMovies.removeAll()
-//        for word in searchText.components(separatedBy: " ") {
-//          resMovies.append(contentsOf: movies.filter { movie in
-//            let match = movie.title.range(of: word, options: .caseInsensitive)
-//            return match != nil && !resMovies.contains(where: { mov -> Bool in
-//              return mov.title == movie.title
-//            })
-//          })
-//        }
-//      }
-//
-//      searchOngoing = !resMovies.isEmpty
+        
+        //      if !searchText.isEmpty {
+        //        resMovies.removeAll()
+        //        for word in searchText.components(separatedBy: " ") {
+        //          resMovies.append(contentsOf: movies.filter { movie in
+        //            let match = movie.title.range(of: word, options: .caseInsensitive)
+        //            return match != nil && !resMovies.contains(where: { mov -> Bool in
+        //              return mov.title == movie.title
+        //            })
+        //          })
+        //        }
+        //      }
+        //
+        //      searchOngoing = !resMovies.isEmpty
     }
     
     func clearAndResign(_ searchBar: UISearchBar) {
-//      resMovies.removeAll()
-//      searchOngoing = false
-//      if !searchBar.text!.isEmpty {
-//        searchBar.text = ""
-//      }
-      searchBar.resignFirstResponder()
+        //      resMovies.removeAll()
+        //      searchOngoing = false
+        //      if !searchBar.text!.isEmpty {
+        //        searchBar.text = ""
+        //      }
+        searchBar.resignFirstResponder()
     }
     
     func updateSearchResLabel(visible: Bool) {
-      
-      footerResLabel.isHidden = !visible
-//      footerResLabel.text = "Found: \(resMovies.count) movies"
+        
+        footerResLabel.isHidden = !visible
+        //      footerResLabel.text = "Found: \(resMovies.count) movies"
     }
 }
 
 extension MainViewController: UISearchBarDelegate {
-
-  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-
-    if searchText.isEmpty {
-      clearAndResign(searchBar)
-    } else {
-      filterSearchResults(from: searchText)
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchText.isEmpty {
+            clearAndResign(searchBar)
+        } else {
+            filterSearchResults(from: searchText)
+        }
     }
-  }
-
-  func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-    clearAndResign(searchBar)
-  }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        clearAndResign(searchBar)
+    }
 }
 
 extension MainViewController: UISearchResultsUpdating {
-  
-  func updateSearchResults(for searchController: UISearchController) {
     
-    if let searchText = searchController.searchBar.text,
-      !searchText.isEmpty {
-      filterSearchResults(from: searchText)
+    func updateSearchResults(for searchController: UISearchController) {
+        
+        if let searchText = searchController.searchBar.text,
+           !searchText.isEmpty {
+            filterSearchResults(from: searchText)
+        }
     }
-  }
-  
+    
 }

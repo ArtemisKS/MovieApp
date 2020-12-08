@@ -13,8 +13,14 @@ protocol MovieServiceProtocol {
     var apiManager: APIManagerProtocol { get }
     
     typealias GetMoviesResult = ResultError<MoviesModel, Error>
+    typealias GetMovieDetailResult = ResultError<MovieDetail, Error>
     
     typealias GetMoviesCompletion = (GetMoviesResult) -> Void
+    typealias GetMovieDetailCompletion = (GetMovieDetailResult) -> Void
+    
+    func getMovieDetails(
+        id: String,
+        completion: @escaping GetMovieDetailCompletion)
     
     func getMovies(
         page: Int,
@@ -61,6 +67,16 @@ struct MovieService: MovieServiceProtocol {
                 completionResult = .failure( error)
             }
         }
+    }
+    
+    func getMovieDetails(id: String, completion: @escaping GetMovieDetailCompletion) {
+        
+        let request = GetMovieDetailRequest(baseURL: baseURL, id: id)
+        
+        processGetRequest(
+            request: request,
+            respType: MovieDetail.self,
+            completion: completion)
     }
     
     func getMovies(

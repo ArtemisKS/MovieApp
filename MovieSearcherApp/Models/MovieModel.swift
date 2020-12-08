@@ -9,7 +9,7 @@ import Foundation
 
 struct MovieModel: Decodable {
     let adult: Bool
-    let backdrop_path: String
+    let backdrop_path: String?
     let genre_ids: [Int]
     let id: UInt64
     let original_language: String
@@ -28,5 +28,4 @@ struct MoviesModel: Decodable {
     
     let results: [MovieModel]
     let page: Int
-    
 }

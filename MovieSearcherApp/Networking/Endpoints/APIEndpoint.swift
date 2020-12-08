@@ -8,13 +8,14 @@
 enum APIEndpoint {
     
     case getMovies(page: Int)
+    case getMovieDetails(id: String)
     
     var stringValue: String {
         switch self {
         case .getMovies(let page):
             return "/popular?api_key=\(Globals.apiKey)&language=en-US&page=\(page)"
-        default:
-            return ""
+        case .getMovieDetails(let id):
+            return "/\(id)?api_key=\(Globals.apiKey)&language=en-US"
         }
     }
 }
