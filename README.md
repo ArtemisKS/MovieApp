@@ -17,6 +17,7 @@ To get this app up and running, just clone the repository, and open MovieSearche
 
 ```Main Screen```
 
+<img src="https://github.com/favicon.ico" height="24" width="48">
 ![Screenshot #1](/images/MainScreen1.jpeg =236x512)
 
 ![Screenshot #2](/images/MainScreen2.jpeg)
