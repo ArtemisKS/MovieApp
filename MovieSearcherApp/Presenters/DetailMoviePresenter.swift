@@ -11,7 +11,7 @@ protocol DetailViewProtocol: class {
     func updateView(
         with movie: MovieDetail?,
         error: Error?)
-    
+    func setLoading(loading: Bool)
     func setPoster(_ image: UIImage?)
 }
 
@@ -52,11 +52,8 @@ class DetailPresenter: DetailViewPresenterProtocol {
         self.router = router
     }
     
-    func tapOnData() {
-        //    router?.showDetail(with: data)
-    }
-    
     func onViewLoaded() {
+        view?.setLoading(loading: true)
         fetchMovie { (error) in
             self.view?.updateView(with: self.movie, error: error)
         }

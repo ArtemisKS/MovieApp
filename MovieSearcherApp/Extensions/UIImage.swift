@@ -10,6 +10,7 @@ import UIKit
 enum Images: String, CaseIterable {
     case lordOrTheRings = "posterLOR"
     case moviePosterPlaceholder = "moviePosterPlaceholder"
+    case spinner = "spinner"
 }
 
 class ImageData {

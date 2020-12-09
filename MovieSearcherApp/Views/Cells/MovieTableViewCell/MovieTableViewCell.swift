@@ -18,16 +18,15 @@ class MovieTableViewCell: UITableViewCell {
     @IBOutlet private(set) weak var posterImageView: UIImageView!
     @IBOutlet private(set) weak var titleLabel: UILabel!
     @IBOutlet private(set) weak var activityIndicator: UIActivityIndicatorView!
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         posterImageView.image = nil
-        // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     
@@ -39,15 +38,13 @@ extension MovieTableViewCell: ImageViewCell {
     }
     
     func setLoading(_ loading: Bool) {
-        cellImageView.isHidden = loading
+        cellImageView.isHidden = loading && cellImageView.image == nil
         loading ?
             activityIndicator.startAnimating() : activityIndicator.stopAnimating()
     }
     
     func setImage(_ image: UIImage) {
-        if activityIndicator.isAnimating {
-            setLoading(false)
-        }
+        setLoading(false)
         posterImageView.image = image
     }
 }

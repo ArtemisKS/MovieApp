@@ -14,8 +14,6 @@ extension CGSize {
     }
 }
 
-
-
 protocol ImageLoader: class {
     var imagesDict: [UInt64 : UIImage] { get set }
     func fetchIcon(for cell: ImageViewCell, movie: MovieModel)
@@ -89,7 +87,7 @@ extension ImageLoader {
             return
         }
         let url = "\(Globals.posterBaseURL)\(posterPath)"
-        cell.cellImageView.sd_setImage(with: URL(string: url), placeholderImage: .getImage(for: .moviePosterPlaceholder)) { [weak self] (image, err, _, _) in
+        cell.cellImageView.sd_setImage(with: URL(string: url)) { [weak self] (image, err, _, _) in
             guard let self = self else { return }
             if let image = image,
                err == nil {
@@ -99,6 +97,7 @@ extension ImageLoader {
                 self.setPlaceholderImage(for: cell, key: key)
             }
         }
+        cell.setLoading(true)
     }
     
     private func setDefImageToDict(cell: ImageViewCell, key: UInt64) {

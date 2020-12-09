@@ -91,6 +91,7 @@ class MainPresenter: MainViewPresenterProtocol {
     }
     
     func onViewDidLoad() {
+        view?.setLoading(loading: true)
         fetchUpdate(fetchCase: .reload)
     }
     
@@ -167,6 +168,7 @@ class MainPresenter: MainViewPresenterProtocol {
         searchResultMovies: [MovieModel]? = nil) {
         
         view?.setLoading(loading: false)
+        view?.setSearchBar(hidden: false)
         
         if let error = error {
             view?.handleStateChange(.error(error))

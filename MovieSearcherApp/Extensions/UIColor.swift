@@ -33,18 +33,15 @@ extension UIColor {
     }
     
     class var systemBlack: UIColor {
-        return UIColor.black.getCustomColor(name: "SystemBlack")
+        UIColor.black.getCustomColor(name: "SystemBlack")
     }
     
     class var systemWhite: UIColor {
-        return UIColor.black.getCustomColor(name: "SystemWhite")
+        UIColor.white.getCustomColor(name: "SystemWhite")
     }
     
     func getCustomColor(name: String) -> UIColor {
-        if #available(iOS 11, *) {
-            return UIColor(named: name) ?? self
-        }
-        return self
+        UIColor(named: name) ?? self
     }
     
 }

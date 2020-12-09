@@ -9,7 +9,90 @@ import UIKit
 import SDWebImage
 import UICircularProgressRing
 
-class DetailViewController: UIViewController {
+protocol ErrorViewTexting {
+    var titleText: String { get }
+    var subtitleText: String { get }
+    var buttonText: String { get }
+}
+
+class ErrorViewVC: UIViewController, ErrorViewTexting {
+    
+    var titleText: String { "Error" }
+    
+    var subtitleText: String { "An error occured" }
+    
+    var buttonText: String { "Try again" }
+    
+    lazy var errorView: UIView = {
+        
+        let title = UILabel()
+        title.text = titleText
+        title.textAlignment = .center
+        title.font = .systemFont(ofSize: 17, weight: .bold)
+        title.numberOfLines = 0
+        title.sizeToFit()
+        
+        let subtitle = UILabel()
+        subtitle.text = subtitleText
+        subtitle.font = .systemFont(ofSize: 13)
+        subtitle.textColor = .init(red: 0.337, green: 0.337, blue: 0.443, alpha: 1)
+        subtitle.numberOfLines = 0
+        subtitle.textAlignment = .center
+        
+        let button = UIButton(type: .system)
+        button.setCornerRadius()
+        button.tintColor = .systemWhite
+        button.backgroundColor = .customBlue
+        button.setTitle(buttonText, for: .normal)
+        button.addTarget(self, action: #selector(onButtonTapped), for: .touchUpInside)
+        
+        let buttonSV = UIStackView(arrangedSubviews: [UIView(), button])
+        buttonSV.axis = .vertical
+        buttonSV.spacing = 16
+        
+        let sv = UIStackView(arrangedSubviews: [title, subtitle, buttonSV])
+        sv.axis = .vertical
+        sv.spacing = 8
+        
+        let container = UIView()
+        container.backgroundColor = .white
+        container.addSubview(sv)
+        view.addSubview(container)
+        
+        for view in [container, sv, button] {
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        var leadAnchorConst: CGFloat = (view.frame.width - title.frame.width) / 2
+        if leadAnchorConst > view.frame.width / 4 {
+            leadAnchorConst /= 2
+        }
+        
+        NSLayoutConstraint.activate([
+            sv.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+            sv.centerYAnchor.constraint(equalTo: container.centerYAnchor),
+            sv.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: leadAnchorConst),
+            sv.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -leadAnchorConst),
+            button.heightAnchor.constraint(equalToConstant: 48)
+        ])
+        
+        return container
+    }()
+    
+    func setupNoOperViewConstr(_ container: UIView) {
+        
+        NSLayoutConstraint.activate([
+            container.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            container.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            container.topAnchor.constraint(equalTo: view.topAnchor),
+            container.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+    }
+    
+    @objc func onButtonTapped() {}
+}
+
+class DetailViewController: ErrorViewVC {
     
     @IBOutlet weak var contScrollView: UIScrollView!
     @IBOutlet weak var posterImageView: UIImageView!
@@ -28,45 +111,9 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var upperViewHeightConstr: NSLayoutConstraint!
     private var posterImage: UIImage?
     
-    private lazy var errorView: UIView = {
-        
-        let title = UILabel()
-        title.text = "Sorry, an error occured"
-        title.font = .systemFont(ofSize: 17, weight: .bold)
-        title.numberOfLines = 0
-        title.sizeToFit()
-        
-        let subtitle = UILabel()
-        subtitle.text = "Could not load the data for movie '\(presenter.movieData.title)'"
-        subtitle.font = .systemFont(ofSize: 12)
-        subtitle.textColor = .init(red: 0.337, green: 0.337, blue: 0.443, alpha: 1)
-        subtitle.numberOfLines = 0
-        subtitle.textAlignment = .center
-        
-        let sv = UIStackView(arrangedSubviews: [title, subtitle])
-        sv.axis = .vertical
-        sv.spacing = 8
-        
-        let container = UIView()
-        container.backgroundColor = .white
-        container.addSubview(sv)
-        view.addSubview(container)
-        
-        for view in [container, sv] {
-            view.translatesAutoresizingMaskIntoConstraints = false
-        }
-        
-        let leadAnchorConst: CGFloat = (view.frame.width - title.frame.width) / 2
-        
-        NSLayoutConstraint.activate([
-            sv.centerXAnchor.constraint(equalTo: container.centerXAnchor),
-            sv.centerYAnchor.constraint(equalTo: container.centerYAnchor),
-            sv.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: leadAnchorConst),
-            sv.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -leadAnchorConst)
-        ])
-        
-        return container
-    }()
+    override var titleText: String { "An error occured" }
+    
+    override var subtitleText: String { "Could not load the data for movie '\(presenter.movieData.title)'" }
     
     private enum BotLabels: Int, CaseIterable {
         case date = 0
@@ -104,6 +151,10 @@ class DetailViewController: UIViewController {
         self.title = title
     }
     
+    @objc override func onButtonTapped() {
+        presenter.onViewLoaded()
+    }
+    
 }
 
 extension DetailViewController: UIScrollViewDelegate {
@@ -121,14 +172,13 @@ extension DetailViewController: DetailViewProtocol {
         posterImage = image
     }
     
-    private func setupNoOperViewConstr(_ container: UIView) {
-        
-        NSLayoutConstraint.activate([
-            container.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            container.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            container.topAnchor.constraint(equalTo: view.topAnchor),
-            container.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        ])
+    func setLoading(loading: Bool) {
+        loading ?
+            activityIndicator.startAnimating(): activityIndicator.stopAnimating()
+        if loading {
+            errorView.isHidden = true
+            contScrollView.isHidden = true
+        }
     }
     
     func updateView(with movie: MovieDetail?, error: Error?) {
@@ -147,13 +197,14 @@ extension DetailViewController: DetailViewProtocol {
             return
         }
         
-        activityIndicator.stopAnimating()
+        errorView.isHidden = true
         
         setGenresLabel(from: movie.genres)
         titleLabel.text = movie.original_title
         overviewDescLabel.text = movie.overview
         setBottomInfoLabels(from: movie)
         
+        setLoading(loading: false)
         contScrollView.isHidden = false
         
         setNavBarTitle(movie.title)
@@ -224,8 +275,12 @@ extension DetailViewController: DetailViewProtocol {
     
     private func animateRatingsView(rating: Double) {
         let level = CGFloat(rating * 10)
-        ratingsView.innerRingColor = .mainBlue
-        ratingsView.font = .systemFont(ofSize: 15)
-        ratingsView.startProgress(to: level, duration: 1)
+        if level == 0 {
+            ratingsView.isHidden = true
+        } else {
+            ratingsView.innerRingColor = .mainBlue
+            ratingsView.font = .systemFont(ofSize: 15)
+            ratingsView.startProgress(to: level, duration: 1)
+        }
     }
 }

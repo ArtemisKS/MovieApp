@@ -13,9 +13,10 @@ protocol MainViewProtocol: class {
     func handleStateChange(_ state: ListState<CellModeling>)
     func updateSearchLabel(hidden: Bool, count: Int)
     func setLoading(loading: Bool)
+    func setSearchBar(hidden: Bool)
 }
 
-class MainViewController: UIViewController, TableDesignable {
+class MainViewController: ErrorViewVC, TableDesignable {
     
     @IBOutlet private(set) weak var tableView: UITableView!
     @IBOutlet private(set) weak var activityIndicator: UIActivityIndicatorView!
@@ -73,6 +74,7 @@ class MainViewController: UIViewController, TableDesignable {
     
     private func setupView() {
         setupSearchBar()
+        setSearchBar(hidden: true)
         setupTableView()
         hideBackButton()
         setNavBar(title: "TMDB")
@@ -86,6 +88,7 @@ class MainViewController: UIViewController, TableDesignable {
         
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
+        searchController.searchBar.searchTextField.keyboardType = .asciiCapable
         searchController.searchBar.searchTextField.clearButtonMode = .whileEditing
         
         searchController.hidesNavigationBarDuringPresentation = false
@@ -94,13 +97,21 @@ class MainViewController: UIViewController, TableDesignable {
         searchController.searchBar.returnKeyType = .done
     }
     
+    func setSearchBar(hidden: Bool) {
+        searchController.searchBar.isHidden = hidden
+    }
+    
     private func hideBackButton() {
         navigationItem.backBarButtonItem = UIBarButtonItem(
                 title: "", style: .plain, target: nil, action: nil)
     }
     
     @objc private func openSearchBar() {
-        searchController.searchBar.becomeFirstResponder()
+        if searchController.searchBar.isFirstResponder {
+            clearAndResign(searchController.searchBar)
+        } else {
+            searchController.searchBar.becomeFirstResponder()
+        }
     }
     
     private func setNavBarRightButtonItem() {
@@ -113,6 +124,10 @@ class MainViewController: UIViewController, TableDesignable {
         setNavBarRightButtonItem()
     }
     
+    @objc override func onButtonTapped() {
+        presenter.onViewDidLoad()
+    }
+    
 }
 
 extension MainViewController: MainViewProtocol {
@@ -121,6 +136,10 @@ extension MainViewController: MainViewProtocol {
     
     func setLoading(loading: Bool) {
         tableView.isHidden = loading
+        if loading {
+            setSearchBar(hidden: true)
+            setErrorView(hidden: true)
+        }
         loading ?
             activityIndicator.startAnimating() : activityIndicator.stopAnimating()
     }
@@ -139,7 +158,14 @@ extension MainViewController: MainViewProtocol {
         case .loading:
             setLoading(loading: true)
         case let .error(error):
-            break
+            if let error = error {
+                self.showAlert(title: "Error", message: error.localizedDescription, completion:  { [weak self] in
+                    guard let self = self else { return }
+                    self.setErrorView(hidden: false)
+                })
+            } else {
+                setErrorView(hidden: false)
+            }
         case let .loadedMore(cellModels):
             let startIndPath = self.cellModels.count - 1
             self.cellModels.append(contentsOf: cellModels)
@@ -148,6 +174,12 @@ extension MainViewController: MainViewProtocol {
                 self.tableView.insertRows(at: indexPaths, with: .automatic)
             })
         }
+    }
+    
+    private func setErrorView(hidden: Bool) {
+        setSearchBar(hidden: !hidden)
+        errorView.isHidden = hidden
+        setupNoOperViewConstr(errorView)
     }
     
 }
