@@ -18,10 +18,12 @@ To get this app up and running, just clone the repository, and open MovieSearche
 ```Main Screen```
 
 <img src="/images/MainScreen1.jpeg" height="1024" width="473"> <img src="/images/MainScreen2.jpeg" height="1024" width="473">
+---
 
 ```Movie Screen```
 
 <img src="/images/MovieScreen1.jpeg" height="1024" width="473"> <img src="/images/MovieScreen2.jpeg" height="1024" width="473">
+---
 
 ```Ongoing Search```
 
