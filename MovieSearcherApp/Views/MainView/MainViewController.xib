@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="MovieSearcherApp" customModuleProvider="target">
             <connections>
-                <outlet property="activityIndicator" destination="DMb-yn-4vX" id="NL0-R7-jJM"/>
+                <outlet property="activityIndicator" destination="yy1-pl-jMY" id="zt9-QB-Ar0"/>
                 <outlet property="tableView" destination="fqM-Dp-LMD" id="kTX-N7-NNL"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -25,19 +25,18 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" id="DMb-yn-4vX">
-                    <rect key="frame" x="197" y="438" width="20" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="yy1-pl-jMY">
+                    <rect key="frame" x="197" y="443" width="20" height="20"/>
                     <color key="color" red="0.10000000000000001" green="0.64000000000000001" blue="0.93999999999999995" alpha="1" colorSpace="calibratedRGB"/>
                 </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="DMb-yn-4vX" firstAttribute="centerY" secondItem="fqM-Dp-LMD" secondAttribute="centerY" id="1mu-ey-8xV"/>
+                <constraint firstItem="yy1-pl-jMY" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="0hB-28-K10"/>
+                <constraint firstItem="yy1-pl-jMY" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="6aZ-Ta-F5N"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="fqM-Dp-LMD" secondAttribute="trailing" id="8XQ-dc-ehg"/>
                 <constraint firstItem="fqM-Dp-LMD" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Dqs-hE-InK"/>
-                <constraint firstItem="DMb-yn-4vX" firstAttribute="centerX" secondItem="fqM-Dp-LMD" secondAttribute="centerX" id="Yde-Le-lb5"/>
                 <constraint firstItem="fqM-Dp-LMD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="jpe-gC-42u"/>
                 <constraint firstAttribute="bottom" secondItem="fqM-Dp-LMD" secondAttribute="bottom" id="rmj-io-0X3"/>
             </constraints>

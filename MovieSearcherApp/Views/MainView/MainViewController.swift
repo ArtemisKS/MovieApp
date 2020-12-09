@@ -96,6 +96,7 @@ class MainViewController: UIViewController, TableDesignable {
         searchController.hidesNavigationBarDuringPresentation = false
         
         searchController.searchBar.placeholder = "Search movies"
+        searchController.searchBar.returnKeyType = .done
     }
     
     private func hideBackButton() {
@@ -103,13 +104,18 @@ class MainViewController: UIViewController, TableDesignable {
                 title: "", style: .plain, target: nil, action: nil)
     }
     
-    private func setNavBar(title: String) {
-        self.title = title
-        navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .search, target: self, action: #selector(openSearchBar))
-    }
-    
     @objc private func openSearchBar() {
         searchController.searchBar.becomeFirstResponder()
+    }
+    
+    private func setNavBarRightButtonItem() {
+        navigationItem.rightBarButtonItem = presenter.dataLoaded ?
+            .init(barButtonSystemItem: .search, target: self, action: #selector(openSearchBar)) : nil
+    }
+    
+    func setNavBar(title: String) {
+        self.title = title
+        setNavBarRightButtonItem()
     }
     
 }
@@ -126,6 +132,7 @@ extension MainViewController: MainViewProtocol {
     
     func handleStateChange(_ state: ListState<CellModeling>) {
         tableView.tableFooterView = footerView
+        setNavBarRightButtonItem()
         switch state {
         case let .initial(cellModels), let .updated(cellModels):
             self.cellModels = cellModels
