@@ -17,23 +17,25 @@ To get this app up and running, just clone the repository, and open MovieSearche
 
 ```Main Screen```
 
-![Screenshot #1](/images/MainScreenWhite.jpeg)
+![Screenshot #1](/images/MainScreen1.jpeg)
 
-![Screenshot #2](/images/MainScreenBlack.jpeg)
+![Screenshot #2](/images/MainScreen2.jpeg)
 
 ```Movie Screen```
 
-![Screenshot #4](/images/MovieScreenBlack.PNG)
+![Screenshot #4](/images/MovieScreen1.PNG)
 
-![Screenshot #4](/images/MovieScreenWhite.PNG)
+![Screenshot #4](/images/MovieScreen2.PNG)
 
 
 ```Ongoing Search```
 
-![Screenshot #5](/images/SearchResBlack.PNG)
+![Screenshot #5](/images/SearchRes1.PNG)
 
-![Screenshot #6](/images/SearchResWhite.PNG)
+![Screenshot #6](/images/SearchRes2.PNG)
 
 ---
 
-## That's all, guys, hope you enjoyed it😉
+The project is written in MVP (Model-View-Presenter, with Routing), with principles of SOLID & GRASP in head (although not always).
+
+## Will surely strive to do better!
