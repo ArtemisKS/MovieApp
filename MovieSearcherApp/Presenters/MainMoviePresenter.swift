@@ -16,9 +16,30 @@ enum ListState<T> {
     case error(Error?)
 }
 
-enum BasicError: Error {
-    case withCode(Int)
-    case withMessage(String)
+class BasicError: NSObject, LocalizedError {
+    let statusCode: Int
+    let message: String?
+    
+    override var description: String {
+        message ?? "Error with code \(statusCode)"
+    }
+    
+    var errorDescription: String? {
+        description
+    }
+    
+    init(statusCode: Int, message: String?) {
+        self.statusCode = statusCode
+        self.message = message
+    }
+    
+    class func withCode(_ code: Int) -> BasicError {
+        BasicError(statusCode: code, message: nil)
+    }
+    
+    class func withMessage(_ message: String) -> BasicError {
+        BasicError(statusCode: -1, message: message)
+    }
 }
 
 protocol MainViewPresenterProtocol: class {

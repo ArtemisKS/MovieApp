@@ -19,8 +19,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var overviewDescLabel: UILabel!
     @IBOutlet weak var bottomContView: UIView!
     
-    @IBOutlet weak var languageStack: UIStackView!
-    @IBOutlet weak var revenueStack: UIStackView!
+    @IBOutlet var bottomStackViews: [UIStackView]!
     @IBOutlet var bottomInfoLabels: [UILabel]!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
@@ -182,16 +181,19 @@ extension DetailViewController: DetailViewProtocol {
         }.joined()
     }
     
-    private func setLanguages(_ label: UILabel, from langs: [MovieDetail.SpokenLanguage]) {
+    private func setLanguages(_ label: UILabel, index: Int, from langs: [MovieDetail.SpokenLanguage]) {
         let text = langs.enumerated().map { $0 == langs.count - 1 ? $1.english_name : "\($1.english_name), "
         }.joined()
         label.text = text
-        languageStack.isHidden = text.isEmpty
+        bottomStackViews[index].isHidden = text.isEmpty
     }
     
-    private func setRevenue(_ label: UILabel, revenue: UInt64) {
-        guard revenue != 0 else { revenueStack.isHidden = true; return }
-        revenueStack.isHidden = false
+    private func setRevenue(_ label: UILabel, index: Int, revenue: UInt64) {
+        guard revenue != 0 else {
+            bottomStackViews[index].isHidden = true
+            return
+        }
+        bottomStackViews[index].isHidden = false
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .currency
         numberFormatter.currencySymbol = "$"
@@ -201,16 +203,18 @@ extension DetailViewController: DetailViewProtocol {
     
     private func setBottomInfoLabels(from movie: MovieDetail) {
         for botLabel in BotLabels.allCases {
+            let index = botLabel.rawValue
             guard let label = getBottomLabel(for: botLabel) else { continue }
             switch botLabel {
             case .date:
                 label.text = movie.release_date
             case .revenue:
-                setRevenue(label, revenue: movie.revenue)
+                setRevenue(label, index: index, revenue: movie.revenue)
             case .runtime:
                 label.text = "\(movie.runtime) min"
+                bottomStackViews[index].isHidden = movie.runtime == 0
             case .lang:
-                setLanguages(label, from: movie.spoken_languages)
+                setLanguages(label, index: index, from: movie.spoken_languages)
             }
         }
     }

@@ -43,6 +43,13 @@ struct MovieService: MovieServiceProtocol {
         respType: A.Type,
         completion: @escaping (ResultError<A, Error>) -> Void) {
         
+        guard Utils.internetConnectionOK else {
+            completion(
+                .failure(
+                    BasicError.withMessage("You appear to be offline")))
+            return
+        }
+        
         apiManager.sendRequest(
             request: request,
             validStatusCodes: .default) { (result) in

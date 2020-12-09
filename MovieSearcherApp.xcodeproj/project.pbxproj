@@ -13,6 +13,7 @@
 		ED39EB75257FDD0E0043731F /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED39EB74257FDD0E0043731F /* MovieDetail.swift */; };
 		ED39EB78257FE5930043731F /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED39EB77257FE5920043731F /* UIView.swift */; };
 		ED39EB7B2580A3CA0043731F /* DefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED39EB7A2580A3C50043731F /* DefaultsManager.swift */; };
+		ED39EB802580DEE70043731F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED39EB7F2580DEE70043731F /* Utils.swift */; };
 		ED417AFE257E9F74004AD1E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417AFD257E9F74004AD1E6 /* AppDelegate.swift */; };
 		ED417B00257E9F74004AD1E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417AFF257E9F74004AD1E6 /* SceneDelegate.swift */; };
 		ED417B07257E9F76004AD1E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED417B06257E9F76004AD1E6 /* Assets.xcassets */; };
@@ -59,6 +60,7 @@
 		ED39EB74257FDD0E0043731F /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
 		ED39EB77257FE5920043731F /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		ED39EB7A2580A3C50043731F /* DefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsManager.swift; sourceTree = "<group>"; };
+		ED39EB7F2580DEE70043731F /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		ED417AFA257E9F74004AD1E6 /* MovieSearcherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieSearcherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED417AFD257E9F74004AD1E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED417AFF257E9F74004AD1E6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -130,9 +132,38 @@
 		ED39EB6A257F7C210043731F /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				ED39EB832580DF2B0043731F /* Resources */,
+				ED39EB7E2580DED70043731F /* Utils */,
 				ED39EB6B257F7C320043731F /* PropertyWrappers.swift */,
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		ED39EB7E2580DED70043731F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				ED39EB7F2580DEE70043731F /* Utils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		ED39EB832580DF2B0043731F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				ED417B06257E9F76004AD1E6 /* Assets.xcassets */,
+				ED417B08257E9F76004AD1E6 /* LaunchScreen.storyboard */,
+				ED417B0B257E9F76004AD1E6 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		ED39EB862580E71E0043731F /* DetailView */ = {
+			isa = PBXGroup;
+			children = (
+				ED417B27257EA452004AD1E6 /* DetailViewController.swift */,
+				ED417B28257EA452004AD1E6 /* DetailViewController.xib */,
+			);
+			path = DetailView;
 			sourceTree = "<group>";
 		};
 		ED417AF1257E9F74004AD1E6 = {
@@ -168,9 +199,6 @@
 				ED417B12257E9FB1004AD1E6 /* Presenters */,
 				ED417AFD257E9F74004AD1E6 /* AppDelegate.swift */,
 				ED417AFF257E9F74004AD1E6 /* SceneDelegate.swift */,
-				ED417B06257E9F76004AD1E6 /* Assets.xcassets */,
-				ED417B08257E9F76004AD1E6 /* LaunchScreen.storyboard */,
-				ED417B0B257E9F76004AD1E6 /* Info.plist */,
 			);
 			path = MovieSearcherApp;
 			sourceTree = "<group>";
@@ -203,9 +231,9 @@
 		ED417B25257EA420004AD1E6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				ED39EB862580E71E0043731F /* DetailView */,
+				ED417BA2257EF887004AD1E6 /* MainView */,
 				ED417B52257EB568004AD1E6 /* Cells */,
-				ED417B27257EA452004AD1E6 /* DetailViewController.swift */,
-				ED417B28257EA452004AD1E6 /* DetailViewController.xib */,
 				ED417B7D257ED94A004AD1E6 /* TableDesignable.swift */,
 			);
 			path = Views;
@@ -243,7 +271,6 @@
 		ED417B52257EB568004AD1E6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				ED417BA2257EF887004AD1E6 /* MainView */,
 				ED417B8D257EE721004AD1E6 /* MovieTableViewCell */,
 				ED417B80257EE369004AD1E6 /* TableViewCellLoader */,
 			);
@@ -464,6 +491,7 @@
 				ED39EB72257FDB770043731F /* GetMovieDetailRequest.swift in Sources */,
 				ED417B56257EBB7C004AD1E6 /* UIColor.swift in Sources */,
 				ED417B2D257EAA0C004AD1E6 /* MainMoviePresenter.swift in Sources */,
+				ED39EB802580DEE70043731F /* Utils.swift in Sources */,
 				ED417B61257EC67C004AD1E6 /* APIManagerValidStatusCodes.swift in Sources */,
 				ED417BA9257EF9EB004AD1E6 /* MainViewCellFactory.swift in Sources */,
 				ED417B5A257EBEC1004AD1E6 /* URLManager.swift in Sources */,
@@ -629,7 +657,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2GV9HU2JH8;
-				INFOPLIST_FILE = MovieSearcherApp/Info.plist;
+				INFOPLIST_FILE = MovieSearcherApp/Other/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -649,7 +678,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2GV9HU2JH8;
-				INFOPLIST_FILE = MovieSearcherApp/Info.plist;
+				INFOPLIST_FILE = MovieSearcherApp/Other/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
