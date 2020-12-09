@@ -16,7 +16,7 @@ protocol AssemblerBuilderProtocol {
 
 class AssemblerBuilder: AssemblerBuilderProtocol {
     
-    let apiManager = APIManager()
+    private let apiManager = APIManager()
     
     func createDetailController(
         data: (movie: MovieModel, poster: UIImage?),
