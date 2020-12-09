@@ -34,11 +34,7 @@ extension MainViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        if searchText.isEmpty {
-            clearAndResign(searchBar)
-        } else {
-            filterSearchResults(from: searchText)
-        }
+        filterSearchResults(from: searchText)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

@@ -108,8 +108,7 @@ class MainPresenter: MainViewPresenterProtocol {
     
     func processSearchText(_ text: String) {
         
-        guard !text.isEmpty,
-              let movies = data.movies else { return }
+        guard let movies = data.movies else { return }
         
         self.data.lastTapTime = Date()
         
@@ -131,6 +130,10 @@ class MainPresenter: MainViewPresenterProtocol {
     }
     
     private func doSearchTextProcessing(_ text: String, movies: [MovieModel]) {
+        if text.isEmpty {
+            reloadWithUsualList()
+            return
+        }
         data.resMovies.removeAll()
         for word in text.components(separatedBy: " ") {
             data.resMovies.append(contentsOf: movies.filter { movie in
@@ -147,9 +150,13 @@ class MainPresenter: MainViewPresenterProtocol {
     func clearAndResignSearch() {
         if isSearchOngoing {
             invalidateTimer()
-            isSearchOngoing = false
-            updateView(error: nil)
+            reloadWithUsualList()
         }
+    }
+    
+    private func reloadWithUsualList() {
+        isSearchOngoing = false
+        updateView(error: nil)
     }
     
     private func fetchUpdate(fetchCase: FetchCase) {

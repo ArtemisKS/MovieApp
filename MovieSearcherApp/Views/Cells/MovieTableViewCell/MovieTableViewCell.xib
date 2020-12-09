@@ -34,7 +34,7 @@
                             </label>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="54" id="7Ya-LQ-5Dh"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="56" id="7Ya-LQ-5Dh"/>
                         </constraints>
                     </stackView>
                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="3aW-bh-jJb">
