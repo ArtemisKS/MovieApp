@@ -23,16 +23,16 @@ To get this app up and running, just clone the repository, and open MovieSearche
 
 ```Movie Screen```
 
-![Screenshot #4](/images/MovieScreen1.PNG)
+![Screenshot #4](/images/MovieScreen1.jpeg)
 
-![Screenshot #4](/images/MovieScreen2.PNG)
+![Screenshot #4](/images/MovieScreen2.jpeg)
 
 
 ```Ongoing Search```
 
-![Screenshot #5](/images/SearchRes1.PNG)
+![Screenshot #5](/images/SearchRes1.jpeg)
 
-![Screenshot #6](/images/SearchRes2.PNG)
+![Screenshot #6](/images/SearchRes2.jpeg)
 
 ---
 
