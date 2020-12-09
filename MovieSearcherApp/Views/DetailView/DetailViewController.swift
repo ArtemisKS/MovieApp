@@ -19,6 +19,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var overviewDescLabel: UILabel!
     @IBOutlet weak var bottomContView: UIView!
     
+    @IBOutlet weak var topStackView: UIStackView!
     @IBOutlet var bottomStackViews: [UIStackView]!
     @IBOutlet var bottomInfoLabels: [UILabel]!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -86,10 +87,12 @@ class DetailViewController: UIViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
       super.traitCollectionDidChange(previousTraitCollection)
-      
-        bottomContView.backgroundColor = isDarkMode ?
-        UIColor.mainBlue.withAlphaComponent(0.4) :
-        UIColor.mainBlue.withAlphaComponent(0.2)
+        
+        for case let view? in [topStackView, bottomContView] {
+            view.backgroundColor = isDarkMode ?
+                UIColor.mainBlue.withAlphaComponent(0.4) :
+                UIColor.mainBlue.withAlphaComponent(0.2)
+        }
     }
     
     private func setupView() {

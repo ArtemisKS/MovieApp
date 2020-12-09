@@ -20,7 +20,6 @@ class MainViewController: UIViewController, TableDesignable {
     
     var presenter: MainViewPresenterProtocol!
     
-    private var searchBar: UISearchBar!
     private let searchController = UISearchController(searchResultsController: nil)
     
     private let footerResLabelHeight: CGFloat = 40
@@ -34,7 +33,7 @@ class MainViewController: UIViewController, TableDesignable {
                     height: footerResLabelHeight)))
         
         footerLabel.backgroundColor = .mainBlue
-        footerLabel.font = UIFont.systemFont(ofSize: 17)
+        footerLabel.font = UIFont(name: "ChalkboardSE-Bold", size: 18)
         footerLabel.textAlignment = .center
         footerLabel.textColor = UIColor.systemWhite
         footerLabel.isHidden = true
@@ -83,7 +82,7 @@ class MainViewController: UIViewController, TableDesignable {
         setupTableView()
         registerLoaderCell()
         hideBackButton()
-        setNavBarTitle("TMDB")
+        setNavBar(title: "TMDB")
     }
     
     private func registerLoaderCell() {
@@ -110,8 +109,13 @@ class MainViewController: UIViewController, TableDesignable {
                 title: "", style: .plain, target: nil, action: nil)
     }
     
-    private func setNavBarTitle(_ title: String) {
+    private func setNavBar(title: String) {
         self.title = title
+        navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .search, target: self, action: #selector(openSearchBar))
+    }
+    
+    @objc private func openSearchBar() {
+        searchController.searchBar.becomeFirstResponder()
     }
     
 }
