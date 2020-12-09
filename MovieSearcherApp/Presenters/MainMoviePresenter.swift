@@ -8,44 +8,11 @@
 import UIKit
 import Alamofire
 
-enum ListState<T> {
-    case loading
-    case initial(items: [T])
-    case loadedMore(items: [T])
-    case updated(items: [T])
-    case error(Error?)
-}
-
-class BasicError: NSObject, LocalizedError {
-    let statusCode: Int
-    let message: String?
-    
-    override var description: String {
-        message ?? "Error with code \(statusCode)"
-    }
-    
-    var errorDescription: String? {
-        description
-    }
-    
-    init(statusCode: Int, message: String?) {
-        self.statusCode = statusCode
-        self.message = message
-    }
-    
-    class func withCode(_ code: Int) -> BasicError {
-        BasicError(statusCode: code, message: nil)
-    }
-    
-    class func withMessage(_ message: String) -> BasicError {
-        BasicError(statusCode: -1, message: message)
-    }
-}
-
 protocol MainViewPresenterProtocol: class {
     
     var dataLoaded: Bool { get }
     var curMaxPage: Int { get }
+    var isSearchOngoing: Bool { get }
     
     init(
         movieService: MovieServiceProtocol,
@@ -57,6 +24,8 @@ protocol MainViewPresenterProtocol: class {
     func didTapOnCell(index: Int)
     func save()
     func fetchIcon(for cell: ImageViewCell, index: Int)
+    func processSearchText(_ text: String)
+    func clearAndResignSearch()
 }
 
 class MainPresenter: MainViewPresenterProtocol {
@@ -65,9 +34,21 @@ class MainPresenter: MainViewPresenterProtocol {
     weak var view: MainViewProtocol?
     var router: RouterProtocol
     
+    private(set) var isSearchOngoing = false {
+        willSet {
+            view?.updateSearchLabel(hidden: !newValue, count: resMovies.count)
+        }
+    }
+    
     private let cellFactory = DBTransactionCellModelsFactory()
     private var postersDict: [UInt64 : UIImage] = [:]
+    
     @Atomic private var movies: [MovieModel]?
+    @Atomic private var resMovies: [MovieModel] = []
+    
+    private var dataSource: [MovieModel]? {
+        isSearchOngoing ? resMovies : movies
+    }
     
     var dataLoaded: Bool {
         movies != nil
@@ -113,8 +94,31 @@ class MainPresenter: MainViewPresenterProtocol {
     }
     
     func didTapOnCell(index: Int) {
-        if let movie = movies?[index] {
+        if let movie = dataSource?[index] {
             router.showDetail(with: movie, and: imagesDict[movie.id])
+        }
+    }
+    
+    func processSearchText(_ text: String) {
+        guard !text.isEmpty,
+              let movies = movies else { return }
+        resMovies.removeAll()
+        for word in text.components(separatedBy: " ") {
+            resMovies.append(contentsOf: movies.filter { movie in
+                let match = movie.title.range(of: word, options: .caseInsensitive)
+                return match != nil && !resMovies.contains(where: { mov -> Bool in
+                    return mov.title == movie.title
+                })
+            })
+        }
+        isSearchOngoing = true
+        updateView(error: nil, searchResultMovies: resMovies)
+    }
+    
+    func clearAndResignSearch() {
+        if isSearchOngoing {
+            isSearchOngoing = false
+            updateView(error: nil)
         }
     }
     
@@ -123,12 +127,15 @@ class MainPresenter: MainViewPresenterProtocol {
             DispatchQueue.main.async {
                 let movies: [MovieModel]? = fetchCase == .loadMore ?
                     movies : nil
-                self?.updateView(with: error, loadedMoreMovies: movies)
+                self?.updateView(error: error, loadedMoreMovies: movies)
             }
         }
     }
     
-    private func updateView(with error: Error?, loadedMoreMovies: [MovieModel]?) {
+    private func updateView(
+        error: Error?,
+        loadedMoreMovies: [MovieModel]? = nil,
+        searchResultMovies: [MovieModel]? = nil) {
         if let error = error {
             view?.handleStateChange(.error(error))
         } else {
@@ -136,6 +143,9 @@ class MainPresenter: MainViewPresenterProtocol {
             if let movies = loadedMoreMovies {
                 cellModels = getCellModels(from: movies)
                 view?.handleStateChange(.loadedMore(items: cellModels))
+            } else if let movies = searchResultMovies {
+                cellModels = getCellModels(from: movies)
+                view?.handleStateChange(.initial(items: cellModels))
             } else {
                 cellModels = makeCellModels()
                 view?.handleStateChange(.initial(items: cellModels))
@@ -226,7 +236,7 @@ class MainPresenter: MainViewPresenterProtocol {
     }
     
     func fetchIcon(for cell: ImageViewCell, index: Int) {
-        guard let movies = movies,
+        guard let movies = dataSource,
               index < movies.count else { return }
         
         fetchIcon(for: cell, movie: movies[index])

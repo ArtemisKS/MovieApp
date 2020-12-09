@@ -11,6 +11,7 @@ import UIKit
 protocol MainViewProtocol: class {
     
     func handleStateChange(_ state: ListState<CellModeling>)
+    func updateSearchLabel(hidden: Bool, count: Int)
 }
 
 class MainViewController: UIViewController, TableDesignable {
@@ -25,12 +26,12 @@ class MainViewController: UIViewController, TableDesignable {
     private let footerResLabelHeight: CGFloat = 40
     
     private lazy var footerResLabel: UILabel = {
-        let footerLabel = UILabel(frame:
-                                    CGRect(
-                                        origin: .zero,
-                                        size: CGSize(
-                                            width: view.frame.width,
-                                            height: footerResLabelHeight)))
+        let footerLabel = UILabel(
+            frame: CGRect(
+                origin: .zero,
+                size: .init(
+                    width: view.frame.width,
+                    height: footerResLabelHeight)))
         
         footerLabel.backgroundColor = .mainBlue
         footerLabel.font = UIFont.systemFont(ofSize: 17)
@@ -66,8 +67,15 @@ class MainViewController: UIViewController, TableDesignable {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
+      super.viewDidAppear(animated)
+      
+      addKeyboardObservers()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+      super.viewDidDisappear(animated)
+      
+      removeObservers()
     }
     
     private func setupView() {
@@ -124,7 +132,7 @@ extension MainViewController: MainViewProtocol {
             //
             //            }
             self.tableView.performBatchUpdates({
-                self.tableView.reloadSections([self.sectionNum], with: .automatic)
+                self.tableView.reloadSections([self.sectionNum], with: .none)
             }, completion: { [weak self] _ in
                 self?.tableView.setContentOffset(.zero, animated: false)
             })
@@ -145,6 +153,11 @@ extension MainViewController: MainViewProtocol {
 }
 
 private extension MainViewController {
+    
+    var bottomSafeArea: CGFloat {
+        let window = UIApplication.shared.keyWindow
+        return window?.safeAreaInsets.bottom ?? 0
+    }
     
     // MARK: - view setup methods
     
@@ -172,15 +185,6 @@ private extension MainViewController {
             UITableView.automaticDimension
     }
     
-}
-
-extension MainViewController {
-    
-    var bottomSafeArea: CGFloat {
-        let window = UIApplication.shared.keyWindow
-        return window?.safeAreaInsets.bottom ?? 0
-    }
-    
     func addKeyboardObservers() {
         
         NotificationCenter.default.addObserver(
@@ -206,15 +210,7 @@ extension MainViewController {
             name: UIResponder.keyboardWillHideNotification,
             object: nil)
     }
-    
-    func getKeyboardHeightFrom(_ notification: Notification) -> CGFloat? {
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            return keyboardRectangle.height
-        }
-        return nil
-    }
-    
+
     @objc func showKeyboard(_ notification: Notification) {
         if let keyboardHeight = getKeyboardHeightFrom(notification) {
             
@@ -224,6 +220,17 @@ extension MainViewController {
     
     @objc func hideKeyboard(_ notification: Notification) {
         footerResLabel.frame = getFooterLabelFrame()
+    }
+}
+
+extension MainViewController {
+    
+    func getKeyboardHeightFrom(_ notification: Notification) -> CGFloat? {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            return keyboardRectangle.height
+        }
+        return nil
     }
     
     func getFooterLabelFrame(with keyboardHeight: CGFloat? = nil) -> CGRect {
@@ -252,35 +259,23 @@ extension MainViewController {
     }
     
     func filterSearchResults(from searchText: String) {
-        
-        //      if !searchText.isEmpty {
-        //        resMovies.removeAll()
-        //        for word in searchText.components(separatedBy: " ") {
-        //          resMovies.append(contentsOf: movies.filter { movie in
-        //            let match = movie.title.range(of: word, options: .caseInsensitive)
-        //            return match != nil && !resMovies.contains(where: { mov -> Bool in
-        //              return mov.title == movie.title
-        //            })
-        //          })
-        //        }
-        //      }
-        //
-        //      searchOngoing = !resMovies.isEmpty
+        presenter.processSearchText(searchText)
     }
     
     func clearAndResign(_ searchBar: UISearchBar) {
-        //      resMovies.removeAll()
-        //      searchOngoing = false
-        //      if !searchBar.text!.isEmpty {
-        //        searchBar.text = ""
-        //      }
+        
+        presenter.clearAndResignSearch()
+        if !searchBar.text!.isEmpty {
+            searchBar.text = ""
+        }
         searchBar.resignFirstResponder()
     }
     
-    func updateSearchResLabel(visible: Bool) {
+    func updateSearchLabel(hidden: Bool, count: Int) {
         
-        footerResLabel.isHidden = !visible
-        //      footerResLabel.text = "Found: \(resMovies.count) movies"
+        footerResLabel.isHidden = hidden
+        footerResLabel.text = count == 0 ?
+            "No movies found" : "Found: \(count) movies"
     }
 }
 
