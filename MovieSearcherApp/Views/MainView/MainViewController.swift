@@ -12,11 +12,13 @@ protocol MainViewProtocol: class {
     
     func handleStateChange(_ state: ListState<CellModeling>)
     func updateSearchLabel(hidden: Bool, count: Int)
+    func setLoading(loading: Bool)
 }
 
 class MainViewController: UIViewController, TableDesignable {
     
     @IBOutlet private(set) weak var tableView: UITableView!
+    @IBOutlet private(set) weak var activityIndicator: UIActivityIndicatorView!
     
     var presenter: MainViewPresenterProtocol!
     
@@ -49,14 +51,6 @@ class MainViewController: UIViewController, TableDesignable {
         didSet {
             registerCellNibs()
         }
-    }
-    
-    var loadingTableViewHeight: CGFloat {
-        let viewHeight = view.frame.height
-        let screenHeight = UIScreen.main.bounds.height
-        let height = min(viewHeight, screenHeight)
-        return height -
-            (navigationController?.navigationBar.frame.height ?? 0)
     }
     
     override func viewDidLoad() {
@@ -124,24 +118,24 @@ extension MainViewController: MainViewProtocol {
     
     private var sectionNum: Int { 0 }
     
+    func setLoading(loading: Bool) {
+        tableView.isHidden = loading
+        loading ?
+            activityIndicator.startAnimating() : activityIndicator.stopAnimating()
+    }
+    
     func handleStateChange(_ state: ListState<CellModeling>) {
         tableView.tableFooterView = footerView
         switch state {
         case let .initial(cellModels), let .updated(cellModels):
             self.cellModels = cellModels
-            self.updateRowHeight()
-            //            UIView.animate(withDuration: 0.25, animations: {
-            //                self.tableView.alpha = 1
-            //            }) { _ in
-            //
-            //            }
             self.tableView.performBatchUpdates({
                 self.tableView.reloadSections([self.sectionNum], with: .none)
             }, completion: { [weak self] _ in
                 self?.tableView.setContentOffset(.zero, animated: false)
             })
         case .loading:
-            self.updateRowHeight(loading: true)
+            setLoading(loading: true)
         case let .error(error):
             break
         case let .loadedMore(cellModels):
@@ -166,21 +160,10 @@ private extension MainViewController {
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.estimatedRowHeight = 300
+        tableView.rowHeight = UITableView.automaticDimension
         //        tableView.bounces = false
         //        tableView.showsVerticalScrollIndicator = false
         tableView.allowsSelection = true
         tableView.tableFooterView = footerView
-        updateRowHeight()
-    }
-    
-    func updateRowHeight() {
-        updateRowHeight(loading: !presenter.dataLoaded)
-    }
-    
-    func updateRowHeight(loading: Bool) {
-        tableView.rowHeight = loading ?
-            loadingTableViewHeight :
-            UITableView.automaticDimension
     }
 }

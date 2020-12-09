@@ -153,7 +153,7 @@ class MainPresenter: MainViewPresenterProtocol {
     
     private func fetchUpdate(fetchCase: FetchCase) {
         fetchMovies { [weak self] (movies, error) in
-            DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                 let movies: [MovieModel]? = fetchCase == .loadMore ?
                     movies : nil
                 self?.updateView(error: error, loadedMoreMovies: movies)
@@ -165,6 +165,9 @@ class MainPresenter: MainViewPresenterProtocol {
         error: Error?,
         loadedMoreMovies: [MovieModel]? = nil,
         searchResultMovies: [MovieModel]? = nil) {
+        
+        view?.setLoading(loading: false)
+        
         if let error = error {
             view?.handleStateChange(.error(error))
         } else {
