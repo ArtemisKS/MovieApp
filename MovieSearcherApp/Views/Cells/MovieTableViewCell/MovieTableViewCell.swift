@@ -9,16 +9,19 @@ import UIKit
 
 protocol ImageViewCell {
     var cellImageView: UIImageView { get }
+    func setImage(_ image: UIImage)
+    func setLoading(_ loading: Bool)
 }
 
 class MovieTableViewCell: UITableViewCell {
     
     @IBOutlet private(set) weak var posterImageView: UIImageView!
     @IBOutlet private(set) weak var titleLabel: UILabel!
-    
+    @IBOutlet private(set) weak var activityIndicator: UIActivityIndicatorView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        posterImageView.image = nil
         // Initialization code
     }
 
@@ -33,6 +36,19 @@ class MovieTableViewCell: UITableViewCell {
 extension MovieTableViewCell: ImageViewCell {
     var cellImageView: UIImageView {
         posterImageView
+    }
+    
+    func setLoading(_ loading: Bool) {
+        cellImageView.isHidden = loading
+        loading ?
+            activityIndicator.startAnimating() : activityIndicator.stopAnimating()
+    }
+    
+    func setImage(_ image: UIImage) {
+        if activityIndicator.isAnimating {
+            setLoading(false)
+        }
+        posterImageView.image = image
     }
 }
 

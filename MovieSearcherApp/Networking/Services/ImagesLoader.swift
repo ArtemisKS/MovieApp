@@ -80,7 +80,7 @@ extension ImageLoader {
         
         let key = movie.id
         if let image = imagesDict[key] {
-            cell.cellImageView.image = image
+            cell.setImage(image)
             return
         }
         
@@ -89,10 +89,11 @@ extension ImageLoader {
             return
         }
         let url = "\(Globals.posterBaseURL)\(posterPath)"
-        cell.cellImageView.sd_setImage(with: URL(string: url)) { [weak self] (image, err, _, _) in
+        cell.cellImageView.sd_setImage(with: URL(string: url), placeholderImage: .getImage(for: .moviePosterPlaceholder)) { [weak self] (image, err, _, _) in
             guard let self = self else { return }
             if let image = image,
                err == nil {
+                cell.setImage(image)
                 self.saveImage(image, by: key)
             } else {
                 self.setPlaceholderImage(for: cell, key: key)
@@ -101,7 +102,7 @@ extension ImageLoader {
     }
     
     private func setDefImageToDict(cell: ImageViewCell, key: UInt64) {
-        var poster: UIImage?
+        var poster: UIImage
         let placeholder: UIImage = .getImage(for: .moviePosterPlaceholder)
         if let image = getImageFromFile(by: key) {
             poster = image
@@ -109,7 +110,7 @@ extension ImageLoader {
             poster = placeholder
         }
 //        imagesDict[key] = poster
-        cell.cellImageView.image = poster
+        cell.setImage(poster)
     }
     
     private func setPlaceholderImage(

@@ -11,7 +11,7 @@ class BasicRequest: URLRequestConvertible {
     func asURLRequest() throws -> URLRequest {
         let requestStringUrl = baseURL + endpointString
         let requestUrl = try requestStringUrl.asURL()
-        var request = try URLRequest(url: requestUrl, method: method, headers: APIManager.allHeaders)
+        let request = try URLRequest(url: requestUrl, method: method, headers: APIManager.allHeaders)
         return request
     }
     
