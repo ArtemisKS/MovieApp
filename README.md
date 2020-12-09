@@ -17,7 +17,7 @@ To get this app up and running, just clone the repository, and open MovieSearche
 
 ```Main Screen```
 
-<img src="/images/MainScreen1.jpeg" height="853" width="394">     <img src="/images/MainScreen2.jpeg" height="853" width="394">
+<img src="/images/MainScreen1.jpeg" height="853" width="394">                   <img src="/images/MainScreen2.jpeg" height="853" width="394">
 
 ```Movie Screen```
 
