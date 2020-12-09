@@ -9,7 +9,7 @@ or you can search a movie you like.
 
 ## Cloning the repo & installation
 
-To get this app up and running, just clone the repository, and open PayKeyTestTask.xcworkspace
+To get this app up and running, just clone the repository, and open MovieSearcherApp.xcworkspace
 
 ---
 
