@@ -42,9 +42,6 @@
 		ED417B73257ECD22004AD1E6 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417B72257ECD22004AD1E6 /* APIEndpoint.swift */; };
 		ED417B7B257ECF99004AD1E6 /* MovieService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417B7A257ECF99004AD1E6 /* MovieService.swift */; };
 		ED417B7E257ED94A004AD1E6 /* TableDesignable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417B7D257ED94A004AD1E6 /* TableDesignable.swift */; };
-		ED417B83257EE3D9004AD1E6 /* LoaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417B81257EE3D9004AD1E6 /* LoaderTableViewCell.swift */; };
-		ED417B84257EE3D9004AD1E6 /* LoaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED417B82257EE3D9004AD1E6 /* LoaderTableViewCell.xib */; };
-		ED417B88257EE450004AD1E6 /* LoaderCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417B87257EE450004AD1E6 /* LoaderCellModel.swift */; };
 		ED417B8B257EE5B3004AD1E6 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417B8A257EE5B3004AD1E6 /* UITableView.swift */; };
 		ED417B90257EE7E1004AD1E6 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417B8E257EE7E1004AD1E6 /* MovieTableViewCell.swift */; };
 		ED417B91257EE7E1004AD1E6 /* MovieTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED417B8F257EE7E1004AD1E6 /* MovieTableViewCell.xib */; };
@@ -95,9 +92,6 @@
 		ED417B72257ECD22004AD1E6 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
 		ED417B7A257ECF99004AD1E6 /* MovieService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieService.swift; sourceTree = "<group>"; };
 		ED417B7D257ED94A004AD1E6 /* TableDesignable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableDesignable.swift; sourceTree = "<group>"; };
-		ED417B81257EE3D9004AD1E6 /* LoaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderTableViewCell.swift; sourceTree = "<group>"; };
-		ED417B82257EE3D9004AD1E6 /* LoaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoaderTableViewCell.xib; sourceTree = "<group>"; };
-		ED417B87257EE450004AD1E6 /* LoaderCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderCellModel.swift; sourceTree = "<group>"; };
 		ED417B8A257EE5B3004AD1E6 /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		ED417B8E257EE7E1004AD1E6 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		ED417B8F257EE7E1004AD1E6 /* MovieTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieTableViewCell.xib; sourceTree = "<group>"; };
@@ -282,7 +276,6 @@
 			isa = PBXGroup;
 			children = (
 				ED417B8D257EE721004AD1E6 /* MovieTableViewCell */,
-				ED417B80257EE369004AD1E6 /* TableViewCellLoader */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -341,16 +334,6 @@
 				ED417B99257EEE6F004AD1E6 /* ImagesLoader.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		ED417B80257EE369004AD1E6 /* TableViewCellLoader */ = {
-			isa = PBXGroup;
-			children = (
-				ED417B81257EE3D9004AD1E6 /* LoaderTableViewCell.swift */,
-				ED417B82257EE3D9004AD1E6 /* LoaderTableViewCell.xib */,
-				ED417B87257EE450004AD1E6 /* LoaderCellModel.swift */,
-			);
-			path = TableViewCellLoader;
 			sourceTree = "<group>";
 		};
 		ED417B8D257EE721004AD1E6 /* MovieTableViewCell */ = {
@@ -440,7 +423,6 @@
 				ED417B91257EE7E1004AD1E6 /* MovieTableViewCell.xib in Resources */,
 				ED417B37257EAB3B004AD1E6 /* MainViewController.xib in Resources */,
 				ED417B2A257EA452004AD1E6 /* DetailViewController.xib in Resources */,
-				ED417B84257EE3D9004AD1E6 /* LoaderTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,8 +480,6 @@
 				ED417B94257EEAFE004AD1E6 /* UIImage.swift in Sources */,
 				ED417B73257ECD22004AD1E6 /* APIEndpoint.swift in Sources */,
 				ED417B36257EAB3B004AD1E6 /* MainViewController.swift in Sources */,
-				ED417B83257EE3D9004AD1E6 /* LoaderTableViewCell.swift in Sources */,
-				ED417B88257EE450004AD1E6 /* LoaderCellModel.swift in Sources */,
 				ED39EB72257FDB770043731F /* GetMovieDetailRequest.swift in Sources */,
 				ED417B56257EBB7C004AD1E6 /* UIColor.swift in Sources */,
 				ED417B2D257EAA0C004AD1E6 /* MainMoviePresenter.swift in Sources */,

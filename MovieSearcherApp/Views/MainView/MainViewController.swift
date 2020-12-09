@@ -74,13 +74,8 @@ class MainViewController: UIViewController, TableDesignable {
     private func setupView() {
         setupSearchBar()
         setupTableView()
-        registerLoaderCell()
         hideBackButton()
         setNavBar(title: "TMDB")
-    }
-    
-    private func registerLoaderCell() {
-        tableView.register(cellType: LoaderTableViewCell.self)
     }
     
     private func setupSearchBar() {
