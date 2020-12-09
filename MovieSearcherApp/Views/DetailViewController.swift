@@ -37,7 +37,7 @@ class DetailViewController: UIViewController {
         title.sizeToFit()
         
         let subtitle = UILabel()
-        subtitle.text = "Could not load the data for movie \(presenter.movieData.title)"
+        subtitle.text = "Could not load the data for movie '\(presenter.movieData.title)'"
         subtitle.font = .systemFont(ofSize: 12)
         subtitle.textColor = .init(red: 0.337, green: 0.337, blue: 0.443, alpha: 1)
         subtitle.numberOfLines = 0

@@ -12,6 +12,7 @@
 		ED39EB72257FDB770043731F /* GetMovieDetailRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED39EB71257FDB760043731F /* GetMovieDetailRequest.swift */; };
 		ED39EB75257FDD0E0043731F /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED39EB74257FDD0E0043731F /* MovieDetail.swift */; };
 		ED39EB78257FE5930043731F /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED39EB77257FE5920043731F /* UIView.swift */; };
+		ED39EB7B2580A3CA0043731F /* DefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED39EB7A2580A3C50043731F /* DefaultsManager.swift */; };
 		ED417AFE257E9F74004AD1E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417AFD257E9F74004AD1E6 /* AppDelegate.swift */; };
 		ED417B00257E9F74004AD1E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417AFF257E9F74004AD1E6 /* SceneDelegate.swift */; };
 		ED417B07257E9F76004AD1E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED417B06257E9F76004AD1E6 /* Assets.xcassets */; };
@@ -30,7 +31,7 @@
 		ED417B56257EBB7C004AD1E6 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417B55257EBB7C004AD1E6 /* UIColor.swift */; };
 		ED417B5A257EBEC1004AD1E6 /* URLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417B59257EBEC1004AD1E6 /* URLManager.swift */; };
 		ED417B5D257EC61A004AD1E6 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417B5C257EC61A004AD1E6 /* APIManager.swift */; };
-		ED417B61257EC67C004AD1E6 /* DBAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417B60257EC67C004AD1E6 /* DBAPIManager.swift */; };
+		ED417B61257EC67C004AD1E6 /* APIManagerValidStatusCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417B60257EC67C004AD1E6 /* APIManagerValidStatusCodes.swift */; };
 		ED417B66257ECC1B004AD1E6 /* BasicRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417B65257ECC1B004AD1E6 /* BasicRequest.swift */; };
 		ED417B6D257ECC7A004AD1E6 /* GetMoviesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417B6C257ECC7A004AD1E6 /* GetMoviesRequest.swift */; };
 		ED417B73257ECD22004AD1E6 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417B72257ECD22004AD1E6 /* APIEndpoint.swift */; };
@@ -57,6 +58,7 @@
 		ED39EB71257FDB760043731F /* GetMovieDetailRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMovieDetailRequest.swift; sourceTree = "<group>"; };
 		ED39EB74257FDD0E0043731F /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
 		ED39EB77257FE5920043731F /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		ED39EB7A2580A3C50043731F /* DefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsManager.swift; sourceTree = "<group>"; };
 		ED417AFA257E9F74004AD1E6 /* MovieSearcherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieSearcherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED417AFD257E9F74004AD1E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED417AFF257E9F74004AD1E6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -77,7 +79,7 @@
 		ED417B55257EBB7C004AD1E6 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		ED417B59257EBEC1004AD1E6 /* URLManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLManager.swift; sourceTree = "<group>"; };
 		ED417B5C257EC61A004AD1E6 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
-		ED417B60257EC67C004AD1E6 /* DBAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBAPIManager.swift; sourceTree = "<group>"; };
+		ED417B60257EC67C004AD1E6 /* APIManagerValidStatusCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManagerValidStatusCodes.swift; sourceTree = "<group>"; };
 		ED417B65257ECC1B004AD1E6 /* BasicRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicRequest.swift; sourceTree = "<group>"; };
 		ED417B6C257ECC7A004AD1E6 /* GetMoviesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMoviesRequest.swift; sourceTree = "<group>"; };
 		ED417B72257ECD22004AD1E6 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
@@ -261,7 +263,8 @@
 			isa = PBXGroup;
 			children = (
 				ED417B5C257EC61A004AD1E6 /* APIManager.swift */,
-				ED417B60257EC67C004AD1E6 /* DBAPIManager.swift */,
+				ED417B60257EC67C004AD1E6 /* APIManagerValidStatusCodes.swift */,
+				ED39EB7A2580A3C50043731F /* DefaultsManager.swift */,
 			);
 			path = APIManager;
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED417B66257ECC1B004AD1E6 /* BasicRequest.swift in Sources */,
+				ED39EB7B2580A3CA0043731F /* DefaultsManager.swift in Sources */,
 				ED417B94257EEAFE004AD1E6 /* UIImage.swift in Sources */,
 				ED417B73257ECD22004AD1E6 /* APIEndpoint.swift in Sources */,
 				ED417B36257EAB3B004AD1E6 /* MainViewController.swift in Sources */,
@@ -460,7 +464,7 @@
 				ED39EB72257FDB770043731F /* GetMovieDetailRequest.swift in Sources */,
 				ED417B56257EBB7C004AD1E6 /* UIColor.swift in Sources */,
 				ED417B2D257EAA0C004AD1E6 /* MainMoviePresenter.swift in Sources */,
-				ED417B61257EC67C004AD1E6 /* DBAPIManager.swift in Sources */,
+				ED417B61257EC67C004AD1E6 /* APIManagerValidStatusCodes.swift in Sources */,
 				ED417BA9257EF9EB004AD1E6 /* MainViewCellFactory.swift in Sources */,
 				ED417B5A257EBEC1004AD1E6 /* URLManager.swift in Sources */,
 				ED417B46257EAFB3004AD1E6 /* MovieModel.swift in Sources */,

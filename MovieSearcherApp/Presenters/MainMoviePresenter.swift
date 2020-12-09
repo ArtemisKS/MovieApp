@@ -130,13 +130,25 @@ class MainPresenter: MainViewPresenterProtocol {
         var pageLoaded = -1
         var movies: [MovieModel] = []
         
+        func extractMoviesData(_ data: MoviesModel) {
+            pageLoaded = max(pageLoaded, data.page)
+            movies.append(contentsOf: data.results)
+        }
+        
         for page in Pages.maxLoadedPage...curMaxPage {
+            if let data = DefaultsManager.getEntity(by: .moviesModel, id: Utils.getString(from: page)) as MoviesModel? {
+                extractMoviesData(data)
+                continue
+            }
             group.enter()
             movieService.getMovies(page: page) { (result) in
                 switch result {
                 case .success(let data):
-                    pageLoaded = max(pageLoaded, data.page)
-                    movies.append(contentsOf: data.results)
+                    extractMoviesData(data)
+                    DefaultsManager.set(
+                        entity: data,
+                        by: .moviesModel,
+                        id: Utils.getString(from: data.page))
                 case .failure(let err):
                     error = err
                 }

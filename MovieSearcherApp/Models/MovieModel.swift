@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieModel: Decodable {
+struct MovieModel: Codable {
     let adult: Bool
     let backdrop_path: String?
     let genre_ids: [Int]
@@ -24,7 +24,7 @@ struct MovieModel: Decodable {
     let vote_count: UInt64
 }
 
-struct MoviesModel: Decodable {
+struct MoviesModel: Codable {
     
     let results: [MovieModel]
     let page: Int

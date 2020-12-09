@@ -7,33 +7,33 @@
 
 import Foundation
 
-struct MovieDetail: Decodable {
+struct MovieDetail: Codable {
     
-    struct Collection: Decodable {
+    struct Collection: Codable {
         let id: UInt64
         let name: String
         let poster_path: String?
-        let backdrop_path: String
+        let backdrop_path: String?
     }
     
-    struct Genre: Decodable {
+    struct Genre: Codable {
         let id: UInt64
         let name: String
     }
     
-    struct ProductionCompany: Decodable {
+    struct ProductionCompany: Codable {
         let id: UInt64
         let logo_path: String?
         let name: String
         let origin_country: String
     }
     
-    struct ProductionCountry: Decodable {
+    struct ProductionCountry: Codable {
         let iso_3166_1: String
         let name: String
     }
     
-    struct SpokenLanguage: Decodable {
+    struct SpokenLanguage: Codable {
         let english_name: String
         let iso_639_1: String
         let name: String

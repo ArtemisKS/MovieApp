@@ -1,5 +1,5 @@
 //
-//  DBAPIManager.swift
+//  APIManagerValidStatusCodes.swift
 //  MovieSearcherApp
 //
 //  Created by Artem Kupriianets on 07.12.2020.
