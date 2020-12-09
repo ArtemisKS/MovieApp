@@ -17,7 +17,7 @@ To get this app up and running, just clone the repository, and open MovieSearche
 
 ```Main Screen```
 
-![Screenshot #1]<img src="/images/MainScreen1.jpeg" height="236" width="512">
+<img src="/images/MainScreen1.jpeg" height="512" width="236">
 
 ![Screenshot #2](/images/MainScreen2.jpeg)
 
