@@ -36,6 +36,6 @@ To get this app up and running, just clone the repository, and open MovieSearche
 
 ---
 
-The project is written in MVP (Model-View-Presenter, with Routing), with principles of SOLID & GRASP in head (although not always).
+The project is written in MVP (Model-View-Presenter, with Routing), with principles of SOLID & GRASP in head (although not always, unfortunately).
 
 ## Will surely strive to do better!
