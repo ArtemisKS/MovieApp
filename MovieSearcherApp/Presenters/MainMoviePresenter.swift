@@ -22,7 +22,6 @@ protocol MainViewPresenterProtocol: class {
     func onViewDidLoad()
     func onScrolledToBottom()
     func didTapOnCell(index: Int)
-    func save()
     func fetchIcon(for cell: ImageViewCell, index: Int)
     func processSearchText(_ text: String)
     func clearAndResignSearch()
@@ -33,25 +32,32 @@ class MainPresenter: MainViewPresenterProtocol {
     var movieService: MovieServiceProtocol
     weak var view: MainViewProtocol?
     var router: RouterProtocol
+    private let cellFactory = DBTransactionCellModelsFactory()
+    @Atomic private var data = LocalData()
+    
+    struct LocalData {
+        var movies: [MovieModel]?
+        var resMovies: [MovieModel] = []
+        
+        var lastTapTime: Date?
+        let debounceTime: TimeInterval = 1
+        var timer: Timer?
+        
+        var postersDict: [UInt64 : UIImage] = [:]
+    }
     
     private(set) var isSearchOngoing = false {
         willSet {
-            view?.updateSearchLabel(hidden: !newValue, count: resMovies.count)
+            view?.updateSearchLabel(hidden: !newValue, count: data.resMovies.count)
         }
     }
     
-    private let cellFactory = DBTransactionCellModelsFactory()
-    private var postersDict: [UInt64 : UIImage] = [:]
-    
-    @Atomic private var movies: [MovieModel]?
-    @Atomic private var resMovies: [MovieModel] = []
-    
     private var dataSource: [MovieModel]? {
-        isSearchOngoing ? resMovies : movies
+        isSearchOngoing ? data.resMovies : data.movies
     }
     
     var dataLoaded: Bool {
-        movies != nil
+        data.movies != nil
     }
     
     var curMaxPage: Int {
@@ -100,23 +106,46 @@ class MainPresenter: MainViewPresenterProtocol {
     }
     
     func processSearchText(_ text: String) {
+        
         guard !text.isEmpty,
-              let movies = movies else { return }
-        resMovies.removeAll()
+              let movies = data.movies else { return }
+        
+        self.data.lastTapTime = Date()
+        
+        invalidateTimer()
+        
+        data.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { (timer) in
+            if Date() - self.data.lastTapTime! >= 1 {
+                self.doSearchTextProcessing(text, movies: movies)
+                timer.invalidate()
+            }
+        }
+    }
+    
+    private func invalidateTimer() {
+        if data.timer != nil {
+            data.timer?.invalidate()
+            data.timer = nil
+        }
+    }
+    
+    private func doSearchTextProcessing(_ text: String, movies: [MovieModel]) {
+        data.resMovies.removeAll()
         for word in text.components(separatedBy: " ") {
-            resMovies.append(contentsOf: movies.filter { movie in
+            data.resMovies.append(contentsOf: movies.filter { movie in
                 let match = movie.title.range(of: word, options: .caseInsensitive)
-                return match != nil && !resMovies.contains(where: { mov -> Bool in
+                return match != nil && !data.resMovies.contains(where: { mov -> Bool in
                     return mov.title == movie.title
                 })
             })
         }
         isSearchOngoing = true
-        updateView(error: nil, searchResultMovies: resMovies)
+        updateView(error: nil, searchResultMovies: data.resMovies)
     }
     
     func clearAndResignSearch() {
         if isSearchOngoing {
+            invalidateTimer()
             isSearchOngoing = false
             updateView(error: nil)
         }
@@ -208,10 +237,10 @@ class MainPresenter: MainViewPresenterProtocol {
                     resErr = checkForPageNumError()
                 }
                 if resErr == nil {
-                    if self.movies == nil {
-                        self.movies = movies
+                    if self.data.movies == nil {
+                        self.data.movies = movies
                     } else {
-                        self.movies?.append(contentsOf: movies)
+                        self.data.movies?.append(contentsOf: movies)
                     }
                 }
                 completion(movies, resErr)
@@ -221,7 +250,7 @@ class MainPresenter: MainViewPresenterProtocol {
     private func makeCellModels() -> [CellModeling] {
         var cellModels: [CellModeling] = []
         
-        guard let movies = movies else { return cellModels }
+        guard let movies = data.movies else { return cellModels }
         
         for movie in movies {
             cellModels.append(
@@ -242,20 +271,12 @@ class MainPresenter: MainViewPresenterProtocol {
         fetchIcon(for: cell, movie: movies[index])
     }
     
-    func save() {
-        //TODO: implement save
-    }
-    
-    @objc private func popToRoot() {
-//        router?.popToRoot()
-    }
-    
 }
 
 extension MainPresenter: ImageLoader {
     
     var imagesDict: [UInt64 : UIImage] {
-        get { postersDict }
-        set { postersDict = newValue }
+        get { data.postersDict }
+        set { data.postersDict = newValue }
     }
 }

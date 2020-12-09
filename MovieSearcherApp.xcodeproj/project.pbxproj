@@ -15,6 +15,9 @@
 		ED39EB7B2580A3CA0043731F /* DefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED39EB7A2580A3C50043731F /* DefaultsManager.swift */; };
 		ED39EB802580DEE70043731F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED39EB7F2580DEE70043731F /* Utils.swift */; };
 		ED39EB9F25811BA20043731F /* DataStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED39EB9E25811B9F0043731F /* DataStructs.swift */; };
+		ED39EBA2258137310043731F /* MainViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED39EBA1258137300043731F /* MainViewController+Keyboard.swift */; };
+		ED39EBAA258137B60043731F /* MainViewController+UISearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED39EBA9258137B60043731F /* MainViewController+UISearchDelegate.swift */; };
+		ED39EBB525813BB70043731F /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED39EBB425813BB70043731F /* Date.swift */; };
 		ED417AFE257E9F74004AD1E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417AFD257E9F74004AD1E6 /* AppDelegate.swift */; };
 		ED417B00257E9F74004AD1E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417AFF257E9F74004AD1E6 /* SceneDelegate.swift */; };
 		ED417B07257E9F76004AD1E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED417B06257E9F76004AD1E6 /* Assets.xcassets */; };
@@ -63,6 +66,9 @@
 		ED39EB7A2580A3C50043731F /* DefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsManager.swift; sourceTree = "<group>"; };
 		ED39EB7F2580DEE70043731F /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		ED39EB9E25811B9F0043731F /* DataStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStructs.swift; sourceTree = "<group>"; };
+		ED39EBA1258137300043731F /* MainViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+Keyboard.swift"; sourceTree = "<group>"; };
+		ED39EBA9258137B60043731F /* MainViewController+UISearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+UISearchDelegate.swift"; sourceTree = "<group>"; };
+		ED39EBB425813BB70043731F /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		ED417AFA257E9F74004AD1E6 /* MovieSearcherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieSearcherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED417AFD257E9F74004AD1E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED417AFF257E9F74004AD1E6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -250,6 +256,7 @@
 				ED417B8A257EE5B3004AD1E6 /* UITableView.swift */,
 				ED417B93257EEAFE004AD1E6 /* UIImage.swift */,
 				ED39EB77257FE5920043731F /* UIView.swift */,
+				ED39EBB425813BB70043731F /* Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -359,8 +366,10 @@
 		ED417BA2257EF887004AD1E6 /* MainView */ = {
 			isa = PBXGroup;
 			children = (
-				ED417BA3257EF8A5004AD1E6 /* MainViewController+UITableView.swift */,
 				ED417B34257EAB3B004AD1E6 /* MainViewController.swift */,
+				ED39EBA1258137300043731F /* MainViewController+Keyboard.swift */,
+				ED417BA3257EF8A5004AD1E6 /* MainViewController+UITableView.swift */,
+				ED39EBA9258137B60043731F /* MainViewController+UISearchDelegate.swift */,
 				ED417B35257EAB3B004AD1E6 /* MainViewController.xib */,
 				ED417BA8257EF9EB004AD1E6 /* MainViewCellFactory.swift */,
 			);
@@ -498,6 +507,7 @@
 				ED417B61257EC67C004AD1E6 /* APIManagerValidStatusCodes.swift in Sources */,
 				ED417BA9257EF9EB004AD1E6 /* MainViewCellFactory.swift in Sources */,
 				ED417B5A257EBEC1004AD1E6 /* URLManager.swift in Sources */,
+				ED39EBAA258137B60043731F /* MainViewController+UISearchDelegate.swift in Sources */,
 				ED417B46257EAFB3004AD1E6 /* MovieModel.swift in Sources */,
 				ED39EB78257FE5930043731F /* UIView.swift in Sources */,
 				ED417B42257EAF44004AD1E6 /* UIViewController.swift in Sources */,
@@ -507,6 +517,7 @@
 				ED417B90257EE7E1004AD1E6 /* MovieTableViewCell.swift in Sources */,
 				ED417B9A257EEE6F004AD1E6 /* ImagesLoader.swift in Sources */,
 				ED39EB9F25811BA20043731F /* DataStructs.swift in Sources */,
+				ED39EBA2258137310043731F /* MainViewController+Keyboard.swift in Sources */,
 				ED39EB6C257F7C330043731F /* PropertyWrappers.swift in Sources */,
 				ED417B14257EA0A0004AD1E6 /* DetailMoviePresenter.swift in Sources */,
 				ED417B50257EB4B4004AD1E6 /* Globals.swift in Sources */,
@@ -519,6 +530,7 @@
 				ED417B00257E9F74004AD1E6 /* SceneDelegate.swift in Sources */,
 				ED417B6D257ECC7A004AD1E6 /* GetMoviesRequest.swift in Sources */,
 				ED417B29257EA452004AD1E6 /* DetailViewController.swift in Sources */,
+				ED39EBB525813BB70043731F /* Date.swift in Sources */,
 				ED39EB75257FDD0E0043731F /* MovieDetail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

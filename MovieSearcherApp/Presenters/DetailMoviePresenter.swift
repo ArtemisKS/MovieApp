@@ -26,7 +26,6 @@ protocol DetailViewPresenterProtocol: class {
         router: RouterProtocol)
     //  var data: [MovieModel]? { get set }
     func onViewLoaded()
-    func tapOnData()
 }
 
 class DetailPresenter: DetailViewPresenterProtocol {

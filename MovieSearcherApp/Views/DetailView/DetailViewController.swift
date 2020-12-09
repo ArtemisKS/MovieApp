@@ -104,10 +104,6 @@ class DetailViewController: UIViewController {
         self.title = title
     }
     
-//    @IBAction func buttonTapped(_ sender: UIButton) {
-//        presenter.tapOnData()
-//    }
-    
 }
 
 extension DetailViewController: UIScrollViewDelegate {

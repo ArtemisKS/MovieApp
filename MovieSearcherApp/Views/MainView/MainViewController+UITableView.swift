@@ -49,26 +49,3 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.tableFooterView = spinner
     }
 }
-
-//extension DetailViewController: UITableViewDelegate {
-//
-//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        return nil
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        return .leastNormalMagnitude
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 54
-//    }
-//
-////    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-////        "\(section + 1)"
-////    }
-//
-//    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-//        return false
-//    }
-//}
