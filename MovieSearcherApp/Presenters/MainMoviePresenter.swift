@@ -73,6 +73,11 @@ class MainPresenter: MainViewPresenterProtocol {
             maxPageNum = page
             maxLoadedPage = page + 1
         }
+        
+        static func resetPages() {
+            maxPageNum = 1
+            maxLoadedPage = 1
+        }
     }
     
     private enum FetchCase {
@@ -207,6 +212,9 @@ class MainPresenter: MainViewPresenterProtocol {
             movies.append(contentsOf: data.results)
         }
         
+        if Pages.maxLoadedPage > curMaxPage {
+            Pages.resetPages()
+        }
         for page in Pages.maxLoadedPage...curMaxPage {
             if let data = DefaultsManager.getEntity(by: .moviesModel, id: Utils.getString(from: page)) as MoviesModel? {
                 extractMoviesData(data)
