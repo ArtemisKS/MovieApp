@@ -50,6 +50,7 @@
 		ED417B9A257EEE6F004AD1E6 /* ImagesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417B99257EEE6F004AD1E6 /* ImagesLoader.swift */; };
 		ED417BA4257EF8A5004AD1E6 /* MainViewController+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417BA3257EF8A5004AD1E6 /* MainViewController+UITableView.swift */; };
 		ED417BA9257EF9EB004AD1E6 /* MainViewCellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED417BA8257EF9EB004AD1E6 /* MainViewCellFactory.swift */; };
+		EDFA99F2258208DB004911D6 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFA99F1258208DB004911D6 /* DetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,6 +101,7 @@
 		ED417B99257EEE6F004AD1E6 /* ImagesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesLoader.swift; sourceTree = "<group>"; };
 		ED417BA3257EF8A5004AD1E6 /* MainViewController+UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+UITableView.swift"; sourceTree = "<group>"; };
 		ED417BA8257EF9EB004AD1E6 /* MainViewCellFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewCellFactory.swift; sourceTree = "<group>"; };
+		EDFA99F1258208DB004911D6 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +167,7 @@
 			children = (
 				ED417B27257EA452004AD1E6 /* DetailViewController.swift */,
 				ED417B28257EA452004AD1E6 /* DetailViewController.xib */,
+				EDFA99F1258208DB004911D6 /* DetailViewModel.swift */,
 			);
 			path = DetailView;
 			sourceTree = "<group>";
@@ -482,6 +485,7 @@
 				ED417B36257EAB3B004AD1E6 /* MainViewController.swift in Sources */,
 				ED39EB72257FDB770043731F /* GetMovieDetailRequest.swift in Sources */,
 				ED417B56257EBB7C004AD1E6 /* UIColor.swift in Sources */,
+				EDFA99F2258208DB004911D6 /* DetailViewModel.swift in Sources */,
 				ED417B2D257EAA0C004AD1E6 /* MainMoviePresenter.swift in Sources */,
 				ED39EB802580DEE70043731F /* Utils.swift in Sources */,
 				ED417B61257EC67C004AD1E6 /* APIManagerValidStatusCodes.swift in Sources */,

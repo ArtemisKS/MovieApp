@@ -122,7 +122,7 @@ class DetailViewController: ErrorViewVC {
         case lang = 3
     }
     
-    var presenter: DetailViewPresenterProtocol!
+    private(set) var presenter: DetailViewPresenterProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -155,6 +155,10 @@ class DetailViewController: ErrorViewVC {
         presenter.onViewLoaded()
     }
     
+    func setPresenter(_ presenter: DetailViewPresenterProtocol) {
+        self.presenter = presenter
+    }
+    
 }
 
 extension DetailViewController: UIScrollViewDelegate {
@@ -181,11 +185,11 @@ extension DetailViewController: DetailViewProtocol {
         }
     }
     
-    func updateView(with movie: MovieDetail?, error: Error?) {
+    func updateView(with viewModel: DetailViewModel?, error: Error?) {
         
-        setupPosterImage(with: movie)
+        setupPosterImage(with: viewModel)
         
-        guard let movie = movie else {
+        guard let viewModel = viewModel else {
             if let error = error {
                 self.showAlert(title: "Error", message: error.localizedDescription, completion:  { [weak self] in
                     guard let self = self else { return }
@@ -199,24 +203,24 @@ extension DetailViewController: DetailViewProtocol {
         
         errorView.isHidden = true
         
-        setGenresLabel(from: movie.genres)
-        titleLabel.text = movie.original_title
-        overviewDescLabel.text = movie.overview
-        setBottomInfoLabels(from: movie)
+        genreDescLabel.text = viewModel.genresLabelText
+        titleLabel.text = viewModel.titleText
+        overviewDescLabel.text = viewModel.overviewText
+        setBottomInfoLabels(from: viewModel)
         
         setLoading(loading: false)
         contScrollView.isHidden = false
         
-        setNavBarTitle(movie.title)
+        setNavBarTitle(viewModel.navBarTitle)
         
-        animateRatingsView(rating: movie.vote_average)
+        animateRatingsView(viewModel: viewModel)
     }
     
-    private func setupPosterImage(with movie: MovieDetail?) {
+    private func setupPosterImage(with viewModel: DetailViewModel?) {
         posterImageView.image = posterImage
-        if let movie = movie,
+        if let viewModel = viewModel,
            posterImage == nil {
-            guard let posterPath = movie.poster_path else {
+            guard let posterPath = viewModel.posterPath else {
                 posterImageView.image = .getImage(for: .moviePosterPlaceholder)
                 return
             }
@@ -225,46 +229,38 @@ extension DetailViewController: DetailViewProtocol {
         }
     }
     
-    private func setGenresLabel(from genres: [MovieDetail.Genre]) {
-        genreDescLabel.text = genres.enumerated().map {
-            $0 == genres.count - 1 ? $1.name : "\($1.name), "
-        }.joined()
+    private func setLanguages(_ label: UILabel, index: Int, from viewModel: DetailViewModel) {
+        
+        label.text = viewModel.languageText
+        bottomStackViews[index].isHidden = viewModel.isLangHidden
     }
     
-    private func setLanguages(_ label: UILabel, index: Int, from langs: [MovieDetail.SpokenLanguage]) {
-        let text = langs.enumerated().map { $0 == langs.count - 1 ? $1.english_name : "\($1.english_name), "
-        }.joined()
-        label.text = text
-        bottomStackViews[index].isHidden = text.isEmpty
+    private func setRevenue(_ label: UILabel, index: Int, from viewModel: DetailViewModel) {
+        
+        label.text = viewModel.revenueText
+        bottomStackViews[index].isHidden = viewModel.isRevenueHidden
     }
     
-    private func setRevenue(_ label: UILabel, index: Int, revenue: UInt64) {
-        guard revenue != 0 else {
-            bottomStackViews[index].isHidden = true
-            return
-        }
-        bottomStackViews[index].isHidden = false
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .currency
-        numberFormatter.currencySymbol = "$"
-        let formattedNumber = numberFormatter.string(from: NSNumber(value: revenue))
-        label.text = formattedNumber
+    private func setRuntime(_ label: UILabel, index: Int, from viewModel: DetailViewModel) {
+        let isHidden = viewModel.isRuntimeHidden
+        bottomStackViews[index].isHidden = isHidden
+        if isHidden { return }
+        label.text = viewModel.runtimeText
     }
     
-    private func setBottomInfoLabels(from movie: MovieDetail) {
+    private func setBottomInfoLabels(from viewModel: DetailViewModel) {
         for botLabel in BotLabels.allCases {
             let index = botLabel.rawValue
             guard let label = getBottomLabel(for: botLabel) else { continue }
             switch botLabel {
             case .date:
-                label.text = movie.release_date
+                label.text = viewModel.releaseDateText
             case .revenue:
-                setRevenue(label, index: index, revenue: movie.revenue)
+                setRevenue(label, index: index, from: viewModel)
             case .runtime:
-                label.text = "\(movie.runtime) min"
-                bottomStackViews[index].isHidden = movie.runtime == 0
+                setRuntime(label, index: index, from: viewModel)
             case .lang:
-                setLanguages(label, index: index, from: movie.spoken_languages)
+                setLanguages(label, index: index, from: viewModel)
             }
         }
     }
@@ -273,11 +269,11 @@ extension DetailViewController: DetailViewProtocol {
         bottomInfoLabels.first { $0.tag == label.rawValue }
     }
     
-    private func animateRatingsView(rating: Double) {
-        let level = CGFloat(rating * 10)
-        if level == 0 {
-            ratingsView.isHidden = true
-        } else {
+    private func animateRatingsView(viewModel: DetailViewModel) {
+        let level = viewModel.ratingsLevel
+        let isHidden = viewModel.isRatingsHidden
+        ratingsView.isHidden = isHidden
+        if !isHidden {
             ratingsView.innerRingColor = .mainBlue
             ratingsView.font = .systemFont(ofSize: 15)
             ratingsView.startProgress(to: level, duration: 1)

@@ -9,7 +9,7 @@ import UIKit
 
 protocol DetailViewProtocol: class {
     func updateView(
-        with movie: MovieDetail?,
+        with viewModel: DetailViewModel?,
         error: Error?)
     func setLoading(loading: Bool)
     func setPoster(_ image: UIImage?)
@@ -55,7 +55,8 @@ class DetailPresenter: DetailViewPresenterProtocol {
     func onViewLoaded() {
         view?.setLoading(loading: true)
         fetchMovie { (error) in
-            self.view?.updateView(with: self.movie, error: error)
+            let viewModel = DetailViewModel(movie: self.movie)
+            self.view?.updateView(with: viewModel, error: error)
         }
     }
     

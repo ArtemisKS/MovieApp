@@ -30,7 +30,7 @@ class AssemblerBuilder: AssemblerBuilderProtocol {
             view: view,
             
             router: router)
-        view.presenter = presenter
+        view.setPresenter(presenter)
         return view
     }
     
@@ -38,7 +38,7 @@ class AssemblerBuilder: AssemblerBuilderProtocol {
         let view = MainViewController.loadFromNib()
         let movieService = MovieService(apiManager: apiManager, baseURL: URLManager.baseURL)
         let presenter = MainPresenter(movieService: movieService, view: view, router: router)
-        view.presenter = presenter
+        view.setPresenter(presenter)
         return view
     }
     

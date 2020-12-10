@@ -21,7 +21,7 @@ class MainViewController: ErrorViewVC, TableDesignable {
     @IBOutlet private(set) weak var tableView: UITableView!
     @IBOutlet private(set) weak var activityIndicator: UIActivityIndicatorView!
     
-    var presenter: MainViewPresenterProtocol!
+    private(set) var presenter: MainViewPresenterProtocol!
     
     private let searchController = UISearchController(searchResultsController: nil)
     
@@ -126,6 +126,10 @@ class MainViewController: ErrorViewVC, TableDesignable {
     
     @objc override func onButtonTapped() {
         presenter.onViewDidLoad()
+    }
+    
+    func setPresenter(_ presenter: MainViewPresenterProtocol) {
+        self.presenter = presenter
     }
     
 }
