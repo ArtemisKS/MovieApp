@@ -9,7 +9,7 @@ import UIKit
 
 protocol DetailViewProtocol: class {
     func updateView(
-        with viewModel: DetailViewModel?,
+        with viewModel: DetailViewModelProtocol?,
         error: Error?)
     func setLoading(loading: Bool)
     func setPoster(_ image: UIImage?)

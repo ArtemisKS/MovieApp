@@ -185,7 +185,7 @@ extension DetailViewController: DetailViewProtocol {
         }
     }
     
-    func updateView(with viewModel: DetailViewModel?, error: Error?) {
+    func updateView(with viewModel: DetailViewModelProtocol?, error: Error?) {
         
         setupPosterImage(with: viewModel)
         
@@ -215,14 +215,14 @@ extension DetailViewController: DetailViewProtocol {
         contScrollView.isHidden = false
     }
     
-    private func setupBottomLabels(from viewModel: DetailViewModel) {
+    private func setupBottomLabels(from viewModel: DetailViewModelProtocol) {
         genreDescLabel.text = viewModel.genresLabelText
         titleLabel.text = viewModel.titleText
         overviewDescLabel.text = viewModel.overviewText
         setBottomInfoLabels(from: viewModel)
     }
     
-    private func setupPosterImage(with viewModel: DetailViewModel?) {
+    private func setupPosterImage(with viewModel: DetailViewModelProtocol?) {
         posterImageView.image = posterImage
         if let viewModel = viewModel,
            posterImage == nil {
@@ -235,14 +235,14 @@ extension DetailViewController: DetailViewProtocol {
         }
     }
     
-    private func setBotLabel(_ label: UILabel, botLabel: BotLabels, from viewModel: DetailViewModel) {
+    private func setBotLabel(_ label: UILabel, botLabel: BotLabels, from viewModel: DetailViewModelProtocol) {
         
         let index = botLabel.rawValue
         label.text = viewModel.getBottomLabelText(botLabel)
         bottomStackViews[index].isHidden = viewModel.isBottomLabelHidden(botLabel)
     }
     
-    private func setBottomInfoLabels(from viewModel: DetailViewModel) {
+    private func setBottomInfoLabels(from viewModel: DetailViewModelProtocol) {
         for botLabel in BotLabels.allCases {
             guard let label = getBottomLabel(for: botLabel) else { continue }
             setBotLabel(label, botLabel: botLabel, from: viewModel)
@@ -253,7 +253,7 @@ extension DetailViewController: DetailViewProtocol {
         bottomInfoLabels.first { $0.tag == label.rawValue }
     }
     
-    private func animateRatingsView(viewModel: DetailViewModel) {
+    private func animateRatingsView(viewModel: DetailViewModelProtocol) {
         let level = viewModel.ratingsLevel
         let isHidden = viewModel.isRatingsHidden
         ratingsView.isHidden = isHidden
