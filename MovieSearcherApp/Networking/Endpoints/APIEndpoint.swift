@@ -5,15 +5,12 @@
 //  Created by Artem Kupriianets on 07.12.2020.
 //
 
-fileprivate var cnt = -1
-
 enum APIEndpoint {
     
     case getMovies(page: Int)
     case getMovieDetails(id: String)
     
     var stringValue: String {
-//        cnt += 1
         switch self {
         case .getMovies(let page):
             return "/popular?api_key=\(Globals.apiKey)&language=en-US&page=\(page)"

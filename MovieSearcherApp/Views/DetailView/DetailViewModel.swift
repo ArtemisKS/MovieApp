@@ -22,10 +22,14 @@ protocol DetailViewModelProtocol {
     var isRevenueHidden: Bool { get }
     var isRuntimeHidden: Bool { get }
     var isRatingsHidden: Bool { get }
+    var isReleaseDateHidden: Bool { get }
     
     var posterPath: String? { get }
     
     var ratingsLevel: CGFloat { get }
+    
+    func getBottomLabelText(_ botLabel: DetailViewController.BotLabels) -> String?
+    func isBottomLabelHidden(_ botLabel: DetailViewController.BotLabels) -> Bool
 }
 
 struct DetailViewModel: DetailViewModelProtocol {
@@ -93,8 +97,45 @@ struct DetailViewModel: DetailViewModelProtocol {
         ratingsLevel == 0
     }
     
+    var isReleaseDateHidden: Bool {
+        releaseDateText.isEmpty
+    }
+    
     var ratingsLevel: CGFloat {
         CGFloat(movie.vote_average * 10)
+    }
+    
+    func getBottomLabelText(_ botLabel: DetailViewController.BotLabels) -> String? {
+        
+        var res: String?
+        
+        switch botLabel {
+        case .date:
+            res = releaseDateText
+        case .lang:
+            res = languageText
+        case .revenue:
+            res = revenueText
+        case .runtime:
+            res = runtimeText
+        }
+        return res
+    }
+    
+    func isBottomLabelHidden(_ botLabel: DetailViewController.BotLabels) -> Bool {
+        var res: Bool
+        
+        switch botLabel {
+        case .date:
+            res = isReleaseDateHidden
+        case .lang:
+            res = isLangHidden
+        case .revenue:
+            res = isRevenueHidden
+        case .runtime:
+            res = isRuntimeHidden
+        }
+        return res
     }
     
     init?(movie: MovieDetail?) {

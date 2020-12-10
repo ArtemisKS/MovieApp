@@ -46,7 +46,7 @@ struct MovieDetail: Codable {
     let genres: [Genre]
     let homepage: String
     let id: UInt64
-    let imdb_id: String
+    let imdb_id: String?
     let original_language: String
     let original_title: String
     let overview: String

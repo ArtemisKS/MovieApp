@@ -55,7 +55,7 @@ class ErrorViewVC: UIViewController, ErrorViewTexting {
         sv.spacing = 8
         
         let container = UIView()
-        container.backgroundColor = .white
+        container.backgroundColor = .systemWhite
         container.addSubview(sv)
         view.addSubview(container)
         
@@ -115,7 +115,7 @@ class DetailViewController: ErrorViewVC {
     
     override var subtitleText: String { "Could not load the data for movie '\(presenter.movieData.title)'" }
     
-    private enum BotLabels: Int, CaseIterable {
+    enum BotLabels: Int, CaseIterable {
         case date = 0
         case revenue = 1
         case runtime = 2
@@ -191,9 +191,9 @@ extension DetailViewController: DetailViewProtocol {
         
         guard let viewModel = viewModel else {
             if let error = error {
-                self.showAlert(title: "Error", message: error.localizedDescription, completion:  { [weak self] in
+                self.showAlert(title: "Error", message: error.localizedDescription, okAction: { [weak self] in
                     guard let self = self else { return }
-                    self.activityIndicator.stopAnimating()
+                    self.setLoading(loading: false)
                     self.errorView.isHidden = false
                     self.setupNoOperViewConstr(self.errorView)
                 })
@@ -201,19 +201,25 @@ extension DetailViewController: DetailViewProtocol {
             return
         }
         
-        errorView.isHidden = true
+        setupBottomLabels(from: viewModel)
         
+        showContent()
+        
+        setNavBarTitle(viewModel.navBarTitle)
+        animateRatingsView(viewModel: viewModel)
+    }
+    
+    private func showContent() {
+        setLoading(loading: false)
+        errorView.isHidden = true
+        contScrollView.isHidden = false
+    }
+    
+    private func setupBottomLabels(from viewModel: DetailViewModel) {
         genreDescLabel.text = viewModel.genresLabelText
         titleLabel.text = viewModel.titleText
         overviewDescLabel.text = viewModel.overviewText
         setBottomInfoLabels(from: viewModel)
-        
-        setLoading(loading: false)
-        contScrollView.isHidden = false
-        
-        setNavBarTitle(viewModel.navBarTitle)
-        
-        animateRatingsView(viewModel: viewModel)
     }
     
     private func setupPosterImage(with viewModel: DetailViewModel?) {
@@ -229,39 +235,17 @@ extension DetailViewController: DetailViewProtocol {
         }
     }
     
-    private func setLanguages(_ label: UILabel, index: Int, from viewModel: DetailViewModel) {
+    private func setBotLabel(_ label: UILabel, botLabel: BotLabels, from viewModel: DetailViewModel) {
         
-        label.text = viewModel.languageText
-        bottomStackViews[index].isHidden = viewModel.isLangHidden
-    }
-    
-    private func setRevenue(_ label: UILabel, index: Int, from viewModel: DetailViewModel) {
-        
-        label.text = viewModel.revenueText
-        bottomStackViews[index].isHidden = viewModel.isRevenueHidden
-    }
-    
-    private func setRuntime(_ label: UILabel, index: Int, from viewModel: DetailViewModel) {
-        let isHidden = viewModel.isRuntimeHidden
-        bottomStackViews[index].isHidden = isHidden
-        if isHidden { return }
-        label.text = viewModel.runtimeText
+        let index = botLabel.rawValue
+        label.text = viewModel.getBottomLabelText(botLabel)
+        bottomStackViews[index].isHidden = viewModel.isBottomLabelHidden(botLabel)
     }
     
     private func setBottomInfoLabels(from viewModel: DetailViewModel) {
         for botLabel in BotLabels.allCases {
-            let index = botLabel.rawValue
             guard let label = getBottomLabel(for: botLabel) else { continue }
-            switch botLabel {
-            case .date:
-                label.text = viewModel.releaseDateText
-            case .revenue:
-                setRevenue(label, index: index, from: viewModel)
-            case .runtime:
-                setRuntime(label, index: index, from: viewModel)
-            case .lang:
-                setLanguages(label, index: index, from: viewModel)
-            }
+            setBotLabel(label, botLabel: botLabel, from: viewModel)
         }
     }
     

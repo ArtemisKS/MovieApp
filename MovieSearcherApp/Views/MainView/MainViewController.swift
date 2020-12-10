@@ -163,7 +163,7 @@ extension MainViewController: MainViewProtocol {
             setLoading(loading: true)
         case let .error(error):
             if let error = error {
-                self.showAlert(title: "Error", message: error.localizedDescription, completion:  { [weak self] in
+                self.showAlert(title: "Error", message: error.localizedDescription, okAction:  { [weak self] in
                     guard let self = self else { return }
                     self.setErrorView(hidden: false)
                 })
