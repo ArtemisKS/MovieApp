@@ -1,9 +1,10 @@
 # MovieApp
 
 ## ```MovieApp``` is a movie searching app.
-It gives you the list of movies from [this site](https://www.themoviedb.org/)
+It gives you the list of movies from [this site](https://www.themoviedb.org/)  
 You can click on the movie and route to a separate screen with its core data,
 or you can search a movie you like.
+Leider, for now, there's only local search, but I will surely add an api request for that or, rather, replace it with one soon
 
 ---
 
