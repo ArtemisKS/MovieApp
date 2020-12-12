@@ -10,6 +10,6 @@ import Foundation
 struct URLManager {
     
     static var baseURL: String {
-        "https://api.themoviedb.org/3/movie"
+        "https://api.themoviedb.org/3"
     }
 }

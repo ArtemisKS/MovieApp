@@ -7,6 +7,18 @@
 
 import Alamofire
 
+protocol GetMoviesReqDataProtocol {
+    var page: Int { get }
+    var query: String? { get }
+    var includeAdult: Bool { get }
+}
+
+struct GetMoviesReqData: GetMoviesReqDataProtocol {
+    let page: Int
+    let query: String?
+    var includeAdult: Bool = false
+}
+
 protocol MovieServiceProtocol {
     
     var baseURL: String { get }
@@ -23,7 +35,11 @@ protocol MovieServiceProtocol {
         completion: @escaping GetMovieDetailCompletion)
     
     func getMovies(
-        page: Int,
+        with reqData: GetMoviesReqDataProtocol,
+        completion: @escaping GetMoviesCompletion)
+    
+    func getMoviesSearch(
+        with reqData: GetMoviesReqData,
         completion: @escaping GetMoviesCompletion)
 }
 
@@ -87,10 +103,26 @@ struct MovieService: MovieServiceProtocol {
     }
     
     func getMovies(
-        page: Int,
+        with reqData: GetMoviesReqDataProtocol,
         completion: @escaping GetMoviesCompletion) {
         
-        let request = GetMoviesRequest(baseURL: baseURL, page: page)
+        let request = GetMoviesRequest(baseURL: baseURL, page: reqData.page)
+        
+        processGetRequest(
+            request: request,
+            respType: MoviesModel.self,
+            completion: completion)
+    }
+    
+    func getMoviesSearch(
+        with reqData: GetMoviesReqData,
+        completion: @escaping GetMoviesCompletion) {
+        
+        let request = GetMoviesSearchRequest(
+            baseURL: baseURL,
+            query: reqData.query ?? "",
+            page: reqData.page,
+            includeAdult: reqData.includeAdult)
         
         processGetRequest(
             request: request,

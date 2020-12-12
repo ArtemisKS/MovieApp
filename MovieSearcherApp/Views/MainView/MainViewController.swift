@@ -27,6 +27,8 @@ class MainViewController: ErrorViewVC, TableDesignable {
     
     let footerResLabelHeight: CGFloat = 40
     
+    private(set) var searchQuery: String?
+    
     private(set) lazy var footerResLabel: UILabel = {
         let footerLabel = UILabel(
             frame: CGRect(
@@ -130,6 +132,10 @@ class MainViewController: ErrorViewVC, TableDesignable {
     
     func setPresenter(_ presenter: MainViewPresenterProtocol) {
         self.presenter = presenter
+    }
+    
+    func setSearchQuery(_ searchQuery: String?) {
+        self.searchQuery = searchQuery
     }
     
 }

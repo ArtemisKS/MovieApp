@@ -9,6 +9,7 @@ import Foundation
 
 enum DefaultsStorageKey: String {
     case moviesModel
+    case searchMovieModel
     case movieDetail
 }
 

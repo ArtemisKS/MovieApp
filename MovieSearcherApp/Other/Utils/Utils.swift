@@ -130,4 +130,8 @@ struct Utils {
     static func getString<T: CustomStringConvertible>(from value: T) -> String {
         "\(value)"
     }
+    
+    static func getString<T: CustomStringConvertible, A: CustomStringConvertible>(from value1: T, and value2: A?) -> String {
+        value2 != nil ? "\(value1) \(value2!)" : "\(value1)"
+    }
 }

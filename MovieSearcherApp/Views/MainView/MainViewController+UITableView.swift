@@ -30,11 +30,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard !presenter.isSearchOngoing &&
-                !cellModels.isEmpty &&
+        guard !cellModels.isEmpty &&
                 indexPath.row == cellModels.count - 1 else { return }
         showSpinner()
-        presenter.onScrolledToBottom()
+        presenter.onScrolledToBottom(query: searchQuery)
     }
     
     

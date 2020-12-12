@@ -33,11 +33,12 @@ extension MainViewController {
 extension MainViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
+        setSearchQuery(searchText.isEmpty ? nil : searchText)
         filterSearchResults(from: searchText)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        setSearchQuery(nil)
         clearAndResign(searchBar)
     }
 }

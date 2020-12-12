@@ -20,7 +20,7 @@ protocol MainViewPresenterProtocol: class {
         router: RouterProtocol)
     
     func onViewDidLoad()
-    func onScrolledToBottom()
+    func onScrolledToBottom(query: String?)
     func didTapOnCell(index: Int)
     func fetchIcon(for cell: ImageViewCell, index: Int)
     func processSearchText(_ text: String)
@@ -34,8 +34,9 @@ class MainPresenter: MainViewPresenterProtocol {
     var router: RouterProtocol
     private let cellFactory = DBTransactionCellModelsFactory()
     @Atomic private var data = LocalData()
+    private var pages = Pages()
     
-    struct LocalData {
+    private class LocalData {
         var movies: [MovieModel]?
         var resMovies: [MovieModel] = []
         
@@ -44,6 +45,12 @@ class MainPresenter: MainViewPresenterProtocol {
         var timer: Timer?
         
         var postersDict: [UInt64 : UIImage] = [:]
+    }
+    
+    private var forSearch = false {
+        didSet {
+            pages.setForSearch(forSearch)
+        }
     }
     
     private(set) var isSearchOngoing = false {
@@ -61,22 +68,72 @@ class MainPresenter: MainViewPresenterProtocol {
     }
     
     var curMaxPage: Int {
-        Pages.maxPageNum
+        pages.maxPageNum
     }
     
-    private struct Pages {
-        static var maxLoadedPage: Int = 1
-        static var maxPageNum: Int = 1
-        static var minPageNum: Int = 1
+    private class Pages {
+        private var maxLoadedMoviesPage: Int = 1
+        private var maxPageMoviesNum: Int = 1
+        private var minPageMoviesNum: Int = 1
         
-        static func setMaxPages(page: Int) {
+        private var maxLoadedSearchPage: Int = 1
+        private var maxPageSearchNum: Int = 1
+        private var minPageSearchNum: Int = 1
+        
+        private var forSearch = false
+        
+        var maxLoadedPage: Int {
+            get {
+                forSearch ? maxLoadedSearchPage : maxLoadedMoviesPage
+            } set {
+                if forSearch {
+                    maxLoadedSearchPage = newValue
+                } else {
+                    maxLoadedMoviesPage = newValue
+                }
+            }
+        }
+        
+        var maxPageNum: Int {
+            get {
+                forSearch ? maxPageMoviesNum : maxPageSearchNum
+            } set {
+                if forSearch {
+                    maxPageMoviesNum = newValue
+                } else {
+                    maxPageSearchNum = newValue
+                }
+            }
+        }
+        
+        var minPageNum: Int {
+            get {
+                forSearch ? minPageMoviesNum : minPageSearchNum
+            } set {
+                if forSearch {
+                    minPageMoviesNum = newValue
+                } else {
+                    minPageSearchNum = newValue
+                }
+            }
+        }
+        
+        func setMaxPages(page: Int) {
             maxPageNum = page
             maxLoadedPage = page + 1
         }
         
-        static func resetPages() {
+        func resetPages() {
             maxPageNum = 1
             maxLoadedPage = 1
+            minPageNum = 1
+        }
+        
+        func setForSearch(_ forSearch: Bool) {
+            if self.forSearch && !forSearch {
+                resetPages()
+            }
+            self.forSearch = forSearch
         }
     }
     
@@ -97,12 +154,12 @@ class MainPresenter: MainViewPresenterProtocol {
     
     func onViewDidLoad() {
         view?.setLoading(loading: true)
-        fetchUpdate(fetchCase: .reload)
+        fetchUpdate(query: nil, fetchCase: .reload)
     }
     
-    func onScrolledToBottom() {
-        Pages.maxPageNum += 1
-        self.fetchUpdate(fetchCase: .loadMore)
+    func onScrolledToBottom(query: String?) {
+        pages.maxPageNum += 1
+        self.fetchUpdate(query: query, fetchCase: .loadMore)
     }
     
     func didTapOnCell(index: Int) {
@@ -119,18 +176,20 @@ class MainPresenter: MainViewPresenterProtocol {
         
         invalidateTimer()
         
-        data.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { (timer) in
+        data.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] (timer) in
+            guard let self = self else { return }
             if Date() - self.data.lastTapTime! >= 1 {
                 self.doSearchTextProcessing(text, movies: movies)
-                timer.invalidate()
+                self.invalidateTimer(timer: timer)
             }
         }
     }
     
-    private func invalidateTimer() {
-        if data.timer != nil {
-            data.timer?.invalidate()
-            data.timer = nil
+    private func invalidateTimer(timer: Timer? = nil) {
+        var timer = timer ?? data.timer
+        if timer != nil {
+            timer?.invalidate()
+            timer = nil
         }
     }
     
@@ -140,6 +199,21 @@ class MainPresenter: MainViewPresenterProtocol {
             return
         }
         data.resMovies.removeAll()
+        if Utils.internetConnectionOK {
+            fetchMovies(query: text) { (movies, error) in
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    let movies: [MovieModel]? = self.pages.maxLoadedPage > 2 ?
+                        movies : nil
+                    self.updateView(error: error, loadedMoreMovies: movies)
+                }
+            }
+        } else {
+            processSearchWhenOffline(text, movies: movies)
+        }
+    }
+    
+    private func processSearchWhenOffline(_ text: String, movies: [MovieModel]) {
         for word in text.components(separatedBy: " ") {
             data.resMovies.append(contentsOf: movies.filter { movie in
                 let match = movie.title.range(of: word, options: .caseInsensitive)
@@ -154,6 +228,7 @@ class MainPresenter: MainViewPresenterProtocol {
     
     func clearAndResignSearch() {
         if isSearchOngoing {
+            self.forSearch = false
             invalidateTimer()
             reloadWithUsualList()
         }
@@ -164,9 +239,9 @@ class MainPresenter: MainViewPresenterProtocol {
         updateView(error: nil)
     }
     
-    private func fetchUpdate(fetchCase: FetchCase) {
-        fetchMovies { [weak self] (movies, error) in
-            DispatchQueue.main.async {
+    private func fetchUpdate(query: String?, fetchCase: FetchCase) {
+        fetchMovies(query: query) { (movies, error) in
+            DispatchQueue.main.async {  [weak self] in
                 let movies: [MovieModel]? = fetchCase == .loadMore ?
                     movies : nil
                 self?.updateView(error: error, loadedMoreMovies: movies)
@@ -186,6 +261,7 @@ class MainPresenter: MainViewPresenterProtocol {
             view?.handleStateChange(.error(error))
         } else {
             var cellModels: [CellModeling]
+            self.isSearchOngoing = self.forSearch
             if let movies = loadedMoreMovies {
                 cellModels = getCellModels(from: movies)
                 view?.handleStateChange(.loadedMore(items: cellModels))
@@ -199,7 +275,9 @@ class MainPresenter: MainViewPresenterProtocol {
         }
     }
     
-    private func fetchMovies(completion: @escaping ([MovieModel], Error?) -> Void) {
+    private func fetchMovies(
+        query: String?,
+        completion: @escaping ([MovieModel], Error?) -> Void) {
         
         let group = DispatchGroup()
         var error: Error?
@@ -207,28 +285,42 @@ class MainPresenter: MainViewPresenterProtocol {
         var pageLoaded = -1
         var movies: [MovieModel] = []
         
+        let forSearch = query != nil
+        let defStorageKey: DefaultsStorageKey = !forSearch
+            ? .moviesModel : .searchMovieModel
+        
         func extractMoviesData(_ data: MoviesModel) {
             pageLoaded = max(pageLoaded, data.page)
             movies.append(contentsOf: data.results)
         }
         
-        if Pages.maxLoadedPage > curMaxPage {
-            Pages.resetPages()
+        self.forSearch = forSearch
+        if pages.maxLoadedPage > curMaxPage {
+            pages.resetPages()
         }
-        for page in Pages.maxLoadedPage...curMaxPage {
-            if let data = DefaultsManager.getEntity(by: .moviesModel, id: Utils.getString(from: page)) as MoviesModel? {
+        for page in pages.maxLoadedPage...curMaxPage {
+            
+            if let data = DefaultsManager.getEntity(by: defStorageKey, id: Utils.getString(from: page, and: query)) as MoviesModel? {
                 extractMoviesData(data)
                 continue
             }
             group.enter()
-            movieService.getMovies(page: page) { (result) in
+            
+            let reqData = GetMoviesReqData(
+                page: page,
+                query: query,
+                includeAdult: false)
+            let requestClosure: (GetMoviesReqData, @escaping MovieServiceProtocol.GetMoviesCompletion) -> Void = forSearch ?
+                movieService.getMoviesSearch :
+                movieService.getMovies
+            requestClosure(reqData) { (result) in
                 switch result {
                 case .success(let data):
                     extractMoviesData(data)
                     DefaultsManager.set(
                         entity: data,
-                        by: .moviesModel,
-                        id: Utils.getString(from: data.page))
+                        by: defStorageKey,
+                        id: Utils.getString(from: data.page, and: query))
                 case .failure(let err):
                     error = err
                 }
@@ -245,7 +337,7 @@ class MainPresenter: MainViewPresenterProtocol {
                     Couldn't load page\(pages.count > 1 ? "s" : "") \(pages.enumerated().map { $0 == pages.count - 1 ? "\($1), " : "\($1)" })
                     """)
             }
-            Pages.setMaxPages(page: pageLoaded)
+            pages.setMaxPages(page: pageLoaded)
             return resErr
         }
         
@@ -256,12 +348,19 @@ class MainPresenter: MainViewPresenterProtocol {
                 if resErr == nil {
                     resErr = checkForPageNumError()
                 }
+                var resMovies = forSearch ?
+                    self.data.resMovies : self.data.movies
                 if resErr == nil {
-                    if self.data.movies == nil {
-                        self.data.movies = movies
+                    if resMovies == nil {
+                        resMovies = movies
                     } else {
-                        self.data.movies?.append(contentsOf: movies)
+                        resMovies?.append(contentsOf: movies)
                     }
+                }
+                if forSearch {
+                    self.data.resMovies = resMovies ?? []
+                } else {
+                    self.data.movies = resMovies
                 }
                 completion(movies, resErr)
             })
@@ -270,7 +369,7 @@ class MainPresenter: MainViewPresenterProtocol {
     private func makeCellModels() -> [CellModeling] {
         var cellModels: [CellModeling] = []
         
-        guard let movies = data.movies else { return cellModels }
+        guard let movies = forSearch ? data.resMovies : data.movies else { return cellModels }
         
         for movie in movies {
             cellModels.append(

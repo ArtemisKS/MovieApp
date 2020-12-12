@@ -30,40 +30,40 @@
             filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
-            landmarkName = "fetchMovies(completion:)"
+            startingLineNumber = "316"
+            endingLineNumber = "316"
+            landmarkName = "fetchMovies(query:completion:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "A6E50595-1104-4F9D-9F7E-759079C942A1 - 9e320355c5580c99"
+                  uuid = "A6E50595-1104-4F9D-9F7E-759079C942A1 - 95044669c9f4605d"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "MovieSearcherApp.MainPresenter.(fetchMovies in _838F898FBC8B15DC1924192DA5D336F1)(completion: (Swift.Array&lt;MovieSearcherApp.MovieModel&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  symbolName = "MovieSearcherApp.MainPresenter.(fetchMovies in _838F898FBC8B15DC1924192DA5D336F1)(query: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Array&lt;MovieSearcherApp.MovieModel&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "MovieSearcherApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/artemiykupriianets/Desktop/MovieSearcherApp/MovieSearcherApp/Presenters/MainMoviePresenter.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "156"
-                  endingLineNumber = "156"
-                  offsetFromSymbolStart = "1075">
+                  startingLineNumber = "303"
+                  endingLineNumber = "303"
+                  offsetFromSymbolStart = "1724">
                </Location>
                <Location
-                  uuid = "A6E50595-1104-4F9D-9F7E-759079C942A1 - 93ee6d8b312486ff"
+                  uuid = "A6E50595-1104-4F9D-9F7E-759079C942A1 - facdbb1708800a3c"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (MovieSearcherApp.ResultError&lt;MovieSearcherApp.MoviesModel, Swift.Error&gt;) -&gt; () in MovieSearcherApp.MainPresenter.(fetchMovies in _838F898FBC8B15DC1924192DA5D336F1)(completion: (Swift.Array&lt;MovieSearcherApp.MovieModel&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  symbolName = "closure #1 (MovieSearcherApp.ResultError&lt;MovieSearcherApp.MoviesModel, Swift.Error&gt;) -&gt; () in MovieSearcherApp.MainPresenter.(fetchMovies in _838F898FBC8B15DC1924192DA5D336F1)(query: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Array&lt;MovieSearcherApp.MovieModel&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "MovieSearcherApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/artemiykupriianets/Desktop/MovieSearcherApp/MovieSearcherApp/Presenters/MainMoviePresenter.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "151"
-                  endingLineNumber = "151"
-                  offsetFromSymbolStart = "297">
+                  startingLineNumber = "273"
+                  endingLineNumber = "273"
+                  offsetFromSymbolStart = "104">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -78,9 +78,9 @@
             filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
-            landmarkName = "fetchMovies(completion:)"
+            startingLineNumber = "344"
+            endingLineNumber = "344"
+            landmarkName = "fetchMovies(query:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -94,9 +94,9 @@
             filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "255"
-            endingLineNumber = "255"
-            landmarkName = "fetchMovies(completion:)"
+            startingLineNumber = "347"
+            endingLineNumber = "347"
+            landmarkName = "fetchMovies(query:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -110,8 +110,8 @@
             filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "249"
-            endingLineNumber = "249"
+            startingLineNumber = "341"
+            endingLineNumber = "341"
             landmarkName = "checkForPageNumError()"
             landmarkType = "9">
          </BreakpointContent>
@@ -174,8 +174,8 @@
             filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
             landmarkName = "setMaxPages(page:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -206,8 +206,8 @@
             filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
             landmarkName = "MainPresenter"
             landmarkType = "3">
          </BreakpointContent>
@@ -222,9 +222,9 @@
             filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
-            landmarkName = "fetchMovies(completion:)"
+            startingLineNumber = "285"
+            endingLineNumber = "285"
+            landmarkName = "fetchMovies(query:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -254,8 +254,8 @@
             filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "250"
-            endingLineNumber = "250"
+            startingLineNumber = "342"
+            endingLineNumber = "342"
             landmarkName = "checkForPageNumError()"
             landmarkType = "9">
          </BreakpointContent>
@@ -270,9 +270,9 @@
             filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
-            landmarkName = "fetchMovies(completion:)"
+            startingLineNumber = "307"
+            endingLineNumber = "307"
+            landmarkName = "fetchMovies(query:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -280,15 +280,15 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "0CC1A71E-04E1-4259-8977-F627476E88AC"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "259"
-            endingLineNumber = "259"
-            landmarkName = "fetchMovies(completion:)"
+            startingLineNumber = "353"
+            endingLineNumber = "353"
+            landmarkName = "fetchMovies(query:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -302,9 +302,9 @@
             filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "260"
-            endingLineNumber = "260"
-            landmarkName = "fetchMovies(completion:)"
+            startingLineNumber = "354"
+            endingLineNumber = "354"
+            landmarkName = "fetchMovies(query:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -312,15 +312,15 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "B86C5467-F453-4C92-B50C-74F8417D427B"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "263"
-            endingLineNumber = "263"
-            landmarkName = "fetchMovies(completion:)"
+            startingLineNumber = "357"
+            endingLineNumber = "357"
+            landmarkName = "fetchMovies(query:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -334,8 +334,8 @@
             filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "190"
-            endingLineNumber = "190"
+            startingLineNumber = "266"
+            endingLineNumber = "266"
             landmarkName = "updateView(error:loadedMoreMovies:searchResultMovies:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -344,14 +344,14 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "9E0DC859-19F2-4E2F-A093-C05DC0B133E6"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
             landmarkName = "updateView(error:loadedMoreMovies:searchResultMovies:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -542,8 +542,8 @@
             filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
             landmarkName = "processSearchText(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -568,15 +568,15 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "226DF4BB-E39C-4C28-8BB4-264ADA30D934"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "266"
-            endingLineNumber = "266"
-            landmarkName = "fetchMovies(completion:)"
+            startingLineNumber = "365"
+            endingLineNumber = "365"
+            landmarkName = "fetchMovies(query:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -590,8 +590,8 @@
             filePath = "MovieSearcherApp/Views/MainView/MainViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "153"
-            endingLineNumber = "153"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
             landmarkName = "handleStateChange(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -606,9 +606,9 @@
             filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
-            landmarkName = "onScrolledToBottom()"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
+            landmarkName = "onScrolledToBottom(query:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -622,8 +622,8 @@
             filePath = "MovieSearcherApp/Views/MainView/MainViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
             landmarkName = "handleStateChange(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -638,8 +638,8 @@
             filePath = "MovieSearcherApp/Views/MainView/MainViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
             landmarkName = "handleStateChange(_:)"
             landmarkType = "7">
             <Locations>
@@ -686,8 +686,8 @@
             filePath = "MovieSearcherApp/Views/MainView/MainViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
             landmarkName = "openSearchBar()"
             landmarkType = "7">
          </BreakpointContent>
@@ -702,8 +702,8 @@
             filePath = "MovieSearcherApp/Views/MainView/MainViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
             landmarkName = "openSearchBar()"
             landmarkType = "7">
          </BreakpointContent>
@@ -718,8 +718,8 @@
             filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
+            startingLineNumber = "198"
+            endingLineNumber = "198"
             landmarkName = "doSearchTextProcessing(_:movies:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -734,8 +734,8 @@
             filePath = "MovieSearcherApp/Networking/Services/MovieService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
             landmarkName = "processGetRequest(request:respType:completion:)"
             landmarkType = "7">
             <Locations>
@@ -786,6 +786,246 @@
             endingLineNumber = "65"
             landmarkName = "releaseDateText"
             landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "053ACA7A-E626-49BE-B3B7-197338EDA6C6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "299"
+            endingLineNumber = "299"
+            landmarkName = "fetchMovies(query:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4B389B0F-19D2-4068-99E2-D027215562F4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "298"
+            endingLineNumber = "298"
+            landmarkName = "fetchMovies(query:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "01FD693A-D151-4318-8298-BFE3DB335E62"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "319"
+            endingLineNumber = "319"
+            landmarkName = "fetchMovies(query:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E453A62D-B913-436E-A2E8-D6D572036D59"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "351"
+            endingLineNumber = "351"
+            landmarkName = "fetchMovies(query:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3C2A32C1-AD32-43C5-8E17-D3D3D72F9665"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "303"
+            endingLineNumber = "303"
+            landmarkName = "fetchMovies(query:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4EE2F1A5-7B3A-4EEF-A5D3-590A3A948B11"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "305"
+            endingLineNumber = "305"
+            landmarkName = "fetchMovies(query:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6C54F1B5-C0EC-4668-BF99-39E4145137D3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "247"
+            endingLineNumber = "247"
+            landmarkName = "fetchUpdate(query:fetchCase:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2B981CB2-3C2A-4825-9880-E14D5C756041"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "355"
+            endingLineNumber = "355"
+            landmarkName = "fetchMovies(query:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "08655388-B17F-441F-9144-47DD3F9DF7AB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "360"
+            endingLineNumber = "360"
+            landmarkName = "fetchMovies(query:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FAF147EC-D7AF-4C8B-9BCB-994A8DDF82E0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "361"
+            endingLineNumber = "361"
+            landmarkName = "fetchMovies(query:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5D6F970D-EDFF-43E6-B029-0AA4F626F428"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "363"
+            endingLineNumber = "363"
+            landmarkName = "fetchMovies(query:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "68481049-D22E-4D35-814E-19A3CE26F9AC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "208"
+            endingLineNumber = "208"
+            landmarkName = "doSearchTextProcessing(_:movies:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5660F727-9531-4357-995D-24BDE7C01922"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "270"
+            endingLineNumber = "270"
+            landmarkName = "updateView(error:loadedMoreMovies:searchResultMovies:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CCA0B6D6-8D2D-4BA0-9608-4CFC6FDF3D79"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "273"
+            endingLineNumber = "273"
+            landmarkName = "updateView(error:loadedMoreMovies:searchResultMovies:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A188F6FC-A228-47A9-A09F-E44405EDE52F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieSearcherApp/Presenters/MainMoviePresenter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "313"
+            endingLineNumber = "313"
+            landmarkName = "fetchMovies(query:completion:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
