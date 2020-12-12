@@ -127,9 +127,14 @@ class DetailViewController: ErrorViewVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        presenter?.onViewLoaded()
         setNavBarTitle("Movie detail")
         scrollView.delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        presenter?.onViewLoaded()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

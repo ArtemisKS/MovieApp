@@ -62,7 +62,7 @@ class DetailPresenter: DetailViewPresenterProtocol {
     
     private func fetchMovie(completion: @escaping (Error?) -> Void) {
         
-        if let movie = DefaultsManager.getEntity(by: .moviesModel, id: Utils.getString(from: data.id)) as MovieDetail? {
+        if let movie = DefaultsManager.getEntity(by: .movieDetail, id: Utils.getString(from: data.id)) as MovieDetail? {
             self.movie = movie
             completion(nil)
             return
