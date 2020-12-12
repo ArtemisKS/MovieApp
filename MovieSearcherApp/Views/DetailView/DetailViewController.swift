@@ -127,14 +127,9 @@ class DetailViewController: ErrorViewVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        presenter?.onViewLoaded()
         setNavBarTitle("Movie detail")
         scrollView.delegate = self
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        presenter?.onViewLoaded()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -259,6 +254,16 @@ extension DetailViewController: DetailViewProtocol {
     }
     
     private func animateRatingsView(viewModel: DetailViewModelProtocol) {
+        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] (timer) in
+            guard let self = self else { return }
+            if self.view.window != nil {
+                self.doRatingsViewAnimation(viewModel: viewModel)
+            }
+        }
+    }
+    
+    private func doRatingsViewAnimation(viewModel: DetailViewModelProtocol) {
+        
         let level = viewModel.ratingsLevel
         let isHidden = viewModel.isRatingsHidden
         ratingsView.isHidden = isHidden
