@@ -44,7 +44,7 @@ struct MovieDetail: Codable {
     let belongs_to_collection: Collection?
     let budget: UInt64
     let genres: [Genre]
-    let homepage: String
+    let homepage: String?
     let id: UInt64
     let imdb_id: String?
     let original_language: String
@@ -56,7 +56,7 @@ struct MovieDetail: Codable {
     let production_countries: [ProductionCountry]
     let release_date: String
     let revenue: UInt64
-    let runtime: UInt32
+    let runtime: UInt32?
     let spoken_languages: [SpokenLanguage]
     let status: String
     let tagline: String

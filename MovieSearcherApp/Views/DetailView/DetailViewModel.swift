@@ -22,6 +22,7 @@ protocol DetailViewModelProtocol {
     var isRevenueHidden: Bool { get }
     var isRuntimeHidden: Bool { get }
     var isRatingsHidden: Bool { get }
+    var isOverviewHidden: Bool { get }
     var isReleaseDateHidden: Bool { get }
     
     var posterPath: String? { get }
@@ -66,7 +67,7 @@ struct DetailViewModel: DetailViewModelProtocol {
     }
     
     var runtimeText: String {
-        "\(movie.runtime) min"
+        "\(movie.runtime ?? 0) min"
     }
     
     var titleText: String {
@@ -82,7 +83,7 @@ struct DetailViewModel: DetailViewModelProtocol {
     }
     
     var isLangHidden: Bool {
-        languageText.isEmpty
+        languageText.trimmed.isEmpty
     }
     
     var isRevenueHidden: Bool {
@@ -90,7 +91,8 @@ struct DetailViewModel: DetailViewModelProtocol {
     }
     
     var isRuntimeHidden: Bool {
-        movie.runtime == 0
+        movie.runtime == nil ||
+            movie.runtime == 0
     }
     
     var isRatingsHidden: Bool {
@@ -98,7 +100,11 @@ struct DetailViewModel: DetailViewModelProtocol {
     }
     
     var isReleaseDateHidden: Bool {
-        releaseDateText.isEmpty
+        releaseDateText.trimmed.isEmpty
+    }
+    
+    var isOverviewHidden: Bool {
+        overviewText.trimmed.isEmpty
     }
     
     var ratingsLevel: CGFloat {

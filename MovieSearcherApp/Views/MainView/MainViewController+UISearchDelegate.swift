@@ -24,9 +24,26 @@ extension MainViewController {
     
     func updateSearchLabel(hidden: Bool, count: Int) {
         
+        let moviesPerPage = 20
+        let noInternet = !Utils.internetConnectionOK
+        let divRest = count % moviesPerPage
+        let pageNum = count / moviesPerPage + (divRest > 0 ? 1 : 0)
+        let localLabel = "Found: \(count) movies"
+        let remoteSearchLabel = pageNum == 1 && divRest > 0 ?
+            localLabel :
+            (noInternet ?"Result page \(pageNum)" :
+                "Page \(pageNum) of search result")
         footerResLabel.isHidden = hidden
-        footerResLabel.text = count == 0 ?
-            "No movies found" : "Found: \(count) movies"
+        let labelText = count == 0 ?
+            "No movies found" :
+            (!presenter.localSearch ?
+                remoteSearchLabel : localLabel)
+        let attrText = NSMutableAttributedString(string: labelText)
+        if noInternet {
+            let offlineStr = NSAttributedString(string: " (offline search)", attributes: [NSAttributedString.Key.foregroundColor : UIColor.customRed])
+            attrText.append(offlineStr)
+        }
+        footerResLabel.attributedText = attrText
     }
 }
 

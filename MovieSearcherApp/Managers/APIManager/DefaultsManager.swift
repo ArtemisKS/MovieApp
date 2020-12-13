@@ -19,6 +19,15 @@ final class DefaultsManager {
     
     // MARK: - Codable objects
     
+    private class func getKey(from key: DefaultsStorageKey, id: String?) -> String {
+        id != nil ? "\(key.rawValue)#\(id!)" : key.rawValue
+    }
+    
+    class func hasEntity(by key: DefaultsStorageKey, id: String?) -> Bool {
+        let key = getKey(from: key, id: id)
+        return (defaults.value(forKey: key) as? Data) != nil
+    }
+    
     class func set<T: Codable>(entity: T, by key: DefaultsStorageKey, id: String?) {
         let key = getKey(from: key, id: id)
         if let encoded = try? JSONEncoder().encode(entity) {
@@ -63,9 +72,5 @@ final class DefaultsManager {
     class func delete(by key: DefaultsStorageKey, id: String?) {
         let key = getKey(from: key, id: id)
         defaults.removeObject(forKey: key)
-    }
-    
-    private class func getKey(from key: DefaultsStorageKey, id: String?) -> String {
-        id != nil ? "\(key.rawValue)#\(id!)" : key.rawValue
     }
 }

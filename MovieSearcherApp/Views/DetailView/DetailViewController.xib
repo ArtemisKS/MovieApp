@@ -17,6 +17,7 @@
                 <outlet property="contScrollView" destination="OVK-fs-8uw" id="kxQ-Fg-J9E"/>
                 <outlet property="genreDescLabel" destination="KkR-QY-gpv" id="wnj-bV-x9y"/>
                 <outlet property="overviewDescLabel" destination="wUz-Hl-P3p" id="fvL-yk-E6F"/>
+                <outlet property="overviewSV" destination="eka-hY-pkZ" id="5Jd-dB-Bti"/>
                 <outlet property="posterImageView" destination="wqW-sB-9un" id="k1s-vk-eRY"/>
                 <outlet property="ratingsView" destination="ek3-Y2-9jo" id="6Xk-PY-VqM"/>
                 <outlet property="scrollView" destination="fGC-bM-txd" id="Sji-Xa-IC8"/>
@@ -172,7 +173,7 @@
                             <rect key="frame" x="16" y="426.5" width="382" height="422"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="255" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" text="The Lord of The Rings: Fellowship of The Ring" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5se-3N-Nbq">
-                                    <rect key="frame" x="14" y="0.0" width="354.5" height="57"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="382" height="57"/>
                                     <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="20"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -198,6 +199,9 @@
                                     </subviews>
                                 </stackView>
                             </subviews>
+                            <constraints>
+                                <constraint firstItem="eka-hY-pkZ" firstAttribute="width" secondItem="5se-3N-Nbq" secondAttribute="width" id="9nG-YU-eep"/>
+                            </constraints>
                         </stackView>
                         <view contentMode="scaleToFill" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Epl-LO-qYj">
                             <rect key="frame" x="0.0" y="872.5" width="414" height="310"/>

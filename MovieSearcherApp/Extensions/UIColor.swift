@@ -17,6 +17,10 @@ extension UIColor {
         .getColor(r: 89, g: 151, b: 227)
     }
     
+    class var customRed: UIColor {
+        return .init(red: 166 / 255, green: 0, blue: 0, alpha: 1)
+    }
+    
     private class func valueMod(_ val: Int) -> CGFloat {
         let maxVal = 256
         let res = Double(val % maxVal)

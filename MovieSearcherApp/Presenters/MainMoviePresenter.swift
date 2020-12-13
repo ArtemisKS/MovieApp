@@ -11,8 +11,8 @@ import Alamofire
 protocol MainViewPresenterProtocol: class {
     
     var dataLoaded: Bool { get }
-    var curMaxPage: Int { get }
     var isSearchOngoing: Bool { get }
+    var localSearch: Bool { get }
     
     init(
         movieService: MovieServiceProtocol,
@@ -36,6 +36,8 @@ class MainPresenter: MainViewPresenterProtocol {
     @Atomic private var data = LocalData()
     private var pages = Pages()
     
+    private(set) var localSearch = false
+    
     private class LocalData {
         var movies: [MovieModel]?
         var resMovies: [MovieModel] = []
@@ -43,6 +45,8 @@ class MainPresenter: MainViewPresenterProtocol {
         var lastTapTime: Date?
         let debounceTime: TimeInterval = 1
         var timer: Timer?
+        
+        var prevQuery: String = ""
         
         var postersDict: [UInt64 : UIImage] = [:]
     }
@@ -67,8 +71,12 @@ class MainPresenter: MainViewPresenterProtocol {
         data.movies != nil
     }
     
-    var curMaxPage: Int {
+    private var curMaxPage: Int {
         pages.maxPageNum
+    }
+    
+    private var inetOK: Bool {
+        Utils.internetConnectionOK
     }
     
     private class Pages {
@@ -159,7 +167,7 @@ class MainPresenter: MainViewPresenterProtocol {
     
     func onScrolledToBottom(query: String?) {
         pages.maxPageNum += 1
-        self.fetchUpdate(query: query, fetchCase: .loadMore)
+        fetchUpdate(query: query, fetchCase: .loadMore)
     }
     
     func didTapOnCell(index: Int) {
@@ -172,7 +180,7 @@ class MainPresenter: MainViewPresenterProtocol {
         
         guard let movies = data.movies else { return }
         
-        self.data.lastTapTime = Date()
+        data.lastTapTime = Date()
         
         invalidateTimer()
         
@@ -198,8 +206,16 @@ class MainPresenter: MainViewPresenterProtocol {
             reloadWithUsualList()
             return
         }
+        if text.trimmed == data.prevQuery.trimmed {
+            return
+        }
+        
         data.resMovies.removeAll()
-        if Utils.internetConnectionOK {
+        let hasSearchRes = DefaultsManager.hasEntity(
+            by: .searchMovieModel,
+            id: Utils.getString(from: 1, and: text))
+        localSearch = !inetOK && !hasSearchRes
+        if !localSearch {
             fetchMovies(query: text) { (movies, error) in
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
@@ -214,6 +230,7 @@ class MainPresenter: MainViewPresenterProtocol {
     }
     
     private func processSearchWhenOffline(_ text: String, movies: [MovieModel]) {
+        forSearch = true
         for word in text.components(separatedBy: " ") {
             data.resMovies.append(contentsOf: movies.filter { movie in
                 let match = movie.title.range(of: word, options: .caseInsensitive)
@@ -222,20 +239,22 @@ class MainPresenter: MainViewPresenterProtocol {
                 })
             })
         }
+        data.prevQuery = text
         isSearchOngoing = true
         updateView(error: nil, searchResultMovies: data.resMovies)
     }
     
     func clearAndResignSearch() {
         if isSearchOngoing {
-            self.forSearch = false
-            invalidateTimer()
             reloadWithUsualList()
         }
     }
     
     private func reloadWithUsualList() {
+        data.prevQuery = ""
+        forSearch = false
         isSearchOngoing = false
+        invalidateTimer()
         updateView(error: nil)
     }
     
@@ -261,7 +280,7 @@ class MainPresenter: MainViewPresenterProtocol {
             view?.handleStateChange(.error(error))
         } else {
             var cellModels: [CellModeling]
-            self.isSearchOngoing = self.forSearch
+            isSearchOngoing = forSearch
             if let movies = loadedMoreMovies {
                 cellModels = getCellModels(from: movies)
                 view?.handleStateChange(.loadedMore(items: cellModels))
@@ -304,6 +323,7 @@ class MainPresenter: MainViewPresenterProtocol {
                 extractMoviesData(data)
                 continue
             }
+            if !inetOK { continue }
             group.enter()
             
             let reqData = GetMoviesReqData(
@@ -328,41 +348,26 @@ class MainPresenter: MainViewPresenterProtocol {
             }
         }
         
-        func checkForPageNumError() -> Error? {
-            var resErr: Error?
-            if pageLoaded < curMaxPage {
-                let pages = pageLoaded...curMaxPage
-                resErr = BasicError.withMessage(
-                    """
-                    Couldn't load page\(pages.count > 1 ? "s" : "") \(pages.enumerated().map { $0 == pages.count - 1 ? "\($1), " : "\($1)" })
-                    """)
-            }
-            pages.setMaxPages(page: pageLoaded)
-            return resErr
-        }
-        
         group.notify(
             queue: .main,
             execute: {
-                var resErr: Error? = error
-                if resErr == nil {
-                    resErr = checkForPageNumError()
-                }
+                self.pages.setMaxPages(page: pageLoaded)
                 var resMovies = forSearch ?
                     self.data.resMovies : self.data.movies
-                if resErr == nil {
+                if error == nil {
                     if resMovies == nil {
                         resMovies = movies
                     } else {
                         resMovies?.append(contentsOf: movies)
                     }
+                    self.data.prevQuery = query ?? ""
                 }
                 if forSearch {
                     self.data.resMovies = resMovies ?? []
                 } else {
                     self.data.movies = resMovies
                 }
-                completion(movies, resErr)
+                completion(movies, error)
             })
     }
     

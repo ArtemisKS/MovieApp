@@ -99,6 +99,7 @@ class DetailViewController: ErrorViewVC {
     @IBOutlet weak var ratingsView: UICircularProgressRing!
     @IBOutlet weak var genreDescLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var overviewSV: UIStackView!
     @IBOutlet weak var overviewDescLabel: UILabel!
     @IBOutlet weak var bottomContView: UIView!
     
@@ -218,7 +219,11 @@ extension DetailViewController: DetailViewProtocol {
     private func setupBottomLabels(from viewModel: DetailViewModelProtocol) {
         genreDescLabel.text = viewModel.genresLabelText
         titleLabel.text = viewModel.titleText
-        overviewDescLabel.text = viewModel.overviewText
+        handleLabel(
+            overviewDescLabel,
+            text: viewModel.overviewText,
+            viewsToHide: overviewSV,
+            hidden: viewModel.isOverviewHidden)
         setBottomInfoLabels(from: viewModel)
     }
     
@@ -238,8 +243,23 @@ extension DetailViewController: DetailViewProtocol {
     private func setBotLabel(_ label: UILabel, botLabel: BotLabels, from viewModel: DetailViewModelProtocol) {
         
         let index = botLabel.rawValue
-        label.text = viewModel.getBottomLabelText(botLabel)
-        bottomStackViews[index].isHidden = viewModel.isBottomLabelHidden(botLabel)
+        handleLabel(
+            label,
+            text: viewModel.getBottomLabelText(botLabel),
+            viewsToHide: bottomStackViews[index],
+            hidden: viewModel.isBottomLabelHidden(botLabel))
+    }
+    
+    private func handleLabel(
+        _ label: UILabel,
+        text: String?,
+        viewsToHide: UIView...,
+        hidden: Bool) {
+        
+        label.text = text
+        for viewToHide in viewsToHide {
+            viewToHide.isHidden = hidden
+        }
     }
     
     private func setBottomInfoLabels(from viewModel: DetailViewModelProtocol) {

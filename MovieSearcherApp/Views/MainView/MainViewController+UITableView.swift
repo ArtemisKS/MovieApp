@@ -9,6 +9,10 @@ import UIKit
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
+    var footerResActualHeight: CGFloat {
+        footerResLabel.isHidden ? 0 : footerResLabelHeight
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cellModels.count
     }
@@ -30,7 +34,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard !cellModels.isEmpty &&
+        guard !presenter.localSearch &&
+                !cellModels.isEmpty &&
                 indexPath.row == cellModels.count - 1 else { return }
         showSpinner()
         presenter.onScrolledToBottom(query: searchQuery)
@@ -38,9 +43,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     private func showSpinner() {
+        let height: CGFloat = 70 + footerResActualHeight
         let spinner = UIActivityIndicatorView(style: .medium)
         spinner.color = .customBlue
-        spinner.frame = CGRect(x: 0.0, y: 0.0, width: tableView.bounds.width, height: 70)
+        spinner.frame = CGRect(x: 0.0, y: 0.0, width: tableView.bounds.width, height: height)
         spinner.startAnimating()
         tableView.tableFooterView = spinner
     }
