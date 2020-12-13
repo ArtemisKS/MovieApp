@@ -74,56 +74,8 @@ class MainViewController: ErrorViewVC, TableDesignable {
       removeObservers()
     }
     
-    private func setupView() {
-        setupSearchBar()
-        setSearchBar(hidden: true)
-        setupTableView()
-        hideBackButton()
-        setNavBar(title: "TMDB")
-    }
-    
-    private func setupSearchBar() {
-        
-        searchController.obscuresBackgroundDuringPresentation = false
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
-        
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
-        searchController.searchBar.searchTextField.keyboardType = .asciiCapable
-        searchController.searchBar.searchTextField.clearButtonMode = .whileEditing
-        
-        searchController.hidesNavigationBarDuringPresentation = false
-        
-        searchController.searchBar.placeholder = "Search movies"
-        searchController.searchBar.returnKeyType = .done
-    }
-    
     func setSearchBar(hidden: Bool) {
         searchController.searchBar.isHidden = hidden
-    }
-    
-    private func hideBackButton() {
-        navigationItem.backBarButtonItem = UIBarButtonItem(
-                title: "", style: .plain, target: nil, action: nil)
-    }
-    
-    @objc private func openSearchBar() {
-        if searchController.searchBar.isFirstResponder {
-            clearAndResign(searchController.searchBar)
-        } else {
-            searchController.searchBar.becomeFirstResponder()
-        }
-    }
-    
-    private func setNavBarRightButtonItem() {
-        navigationItem.rightBarButtonItem = presenter.dataLoaded ?
-            .init(barButtonSystemItem: .search, target: self, action: #selector(openSearchBar)) : nil
-    }
-    
-    func setNavBar(title: String) {
-        self.title = title
-        setNavBarRightButtonItem()
     }
     
     @objc override func onButtonTapped() {
@@ -198,6 +150,62 @@ private extension MainViewController {
     
     // MARK: - view setup methods
     
+    private func setupView() {
+        setupSearchBar()
+        setSearchBar(hidden: true)
+        setupTableView()
+        setupRefreshControl()
+        hideBackButton()
+        setNavBar(title: "TMDB")
+    }
+    
+    func setupSearchBar() {
+        
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.searchTextField.keyboardType = .asciiCapable
+        searchController.searchBar.searchTextField.clearButtonMode = .whileEditing
+        
+        searchController.hidesNavigationBarDuringPresentation = false
+        
+        searchController.searchBar.placeholder = "Search movies"
+        searchController.searchBar.returnKeyType = .done
+    }
+    
+    func hideBackButton() {
+        navigationItem.backBarButtonItem = UIBarButtonItem(
+                title: "", style: .plain, target: nil, action: nil)
+    }
+    
+    @objc func openSearchBar() {
+        if searchController.searchBar.isFirstResponder {
+            clearAndResign(searchController.searchBar)
+        } else {
+            searchController.searchBar.becomeFirstResponder()
+        }
+    }
+    
+    func setNavBarRightButtonItem() {
+        navigationItem.rightBarButtonItem = presenter.dataLoaded ?
+            .init(barButtonSystemItem: .search, target: self, action: #selector(openSearchBar)) : nil
+    }
+    
+    func setNavBar(title: String) {
+        self.title = title
+        setNavBarRightButtonItem()
+    }
+    
+    func setupRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .customBlue
+        refreshControl.addTarget(self, action: #selector(updateTable), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
+    
     func setupTableView() {
         tableView.backgroundColor = .systemWhite
         tableView.tableFooterView = UIView()
@@ -209,5 +217,12 @@ private extension MainViewController {
         //        tableView.showsVerticalScrollIndicator = false
         tableView.allowsSelection = true
         tableView.tableFooterView = footerView
+    }
+    
+    @objc func updateTable(refreshControl: UIRefreshControl) {
+        refreshControl.endRefreshing()
+        if !noInternet {
+            presenter.onTableViewRefresh()
+        }
     }
 }

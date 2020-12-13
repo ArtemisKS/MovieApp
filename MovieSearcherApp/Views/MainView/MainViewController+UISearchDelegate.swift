@@ -9,6 +9,10 @@ import UIKit
 
 extension MainViewController {
     
+    var noInternet: Bool {
+        !Utils.internetConnectionOK
+    }
+    
     func filterSearchResults(from searchText: String) {
         presenter.processSearchText(searchText)
     }
@@ -25,7 +29,7 @@ extension MainViewController {
     func updateSearchLabel(hidden: Bool, count: Int) {
         
         let moviesPerPage = 20
-        let noInternet = !Utils.internetConnectionOK
+        let noInternet = self.noInternet
         let divRest = count % moviesPerPage
         let pageNum = count / moviesPerPage + (divRest > 0 ? 1 : 0)
         let localLabel = "Found: \(count) movies"

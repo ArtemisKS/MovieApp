@@ -73,4 +73,11 @@ final class DefaultsManager {
         let key = getKey(from: key, id: id)
         defaults.removeObject(forKey: key)
     }
+    
+    class func resetDefaults() {
+        let dictionary = defaults.dictionaryRepresentation()
+        dictionary.keys.forEach { key in
+            defaults.removeObject(forKey: key)
+        }
+    }
 }

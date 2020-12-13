@@ -20,6 +20,7 @@ protocol MainViewPresenterProtocol: class {
         router: RouterProtocol)
     
     func onViewDidLoad()
+    func onTableViewRefresh()
     func onScrolledToBottom(query: String?)
     func didTapOnCell(index: Int)
     func fetchIcon(for cell: ImageViewCell, index: Int)
@@ -49,6 +50,12 @@ class MainPresenter: MainViewPresenterProtocol {
         var prevQuery: String = ""
         
         var postersDict: [UInt64 : UIImage] = [:]
+        
+        func resetData() {
+            movies = nil
+            resMovies = []
+            postersDict = [:]
+        }
     }
     
     private var forSearch = false {
@@ -161,13 +168,28 @@ class MainPresenter: MainViewPresenterProtocol {
     }
     
     func onViewDidLoad() {
-        view?.setLoading(loading: true)
-        fetchUpdate(query: nil, fetchCase: .reload)
+        doFullDataFetch()
     }
     
     func onScrolledToBottom(query: String?) {
         pages.maxPageNum += 1
         fetchUpdate(query: query, fetchCase: .loadMore)
+    }
+    
+    func onTableViewRefresh() {
+        resetData()
+        doFullDataFetch()
+    }
+    
+    private func resetData() {
+        DefaultsManager.resetDefaults()
+        data.resetData()
+        pages.resetPages()
+    }
+    
+    private func doFullDataFetch() {
+        view?.setLoading(loading: true)
+        fetchUpdate(query: nil, fetchCase: .reload)
     }
     
     func didTapOnCell(index: Int) {
@@ -215,6 +237,8 @@ class MainPresenter: MainViewPresenterProtocol {
             by: .searchMovieModel,
             id: Utils.getString(from: 1, and: text))
         localSearch = !inetOK && !hasSearchRes
+        forSearch = true
+        pages.resetPages()
         if !localSearch {
             fetchMovies(query: text) { (movies, error) in
                 DispatchQueue.main.async { [weak self] in
@@ -230,14 +254,12 @@ class MainPresenter: MainViewPresenterProtocol {
     }
     
     private func processSearchWhenOffline(_ text: String, movies: [MovieModel]) {
-        forSearch = true
         for word in text.components(separatedBy: " ") {
             data.resMovies.append(contentsOf: movies.filter { movie in
                 let match = movie.title.range(of: word, options: .caseInsensitive)
-                return match != nil && !data.resMovies.contains(where: { mov -> Bool in
-                    return mov.title == movie.title
-                })
+                return match != nil
             })
+            data.resMovies = Array(Set(data.resMovies))
         }
         data.prevQuery = text
         isSearchOngoing = true
