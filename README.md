@@ -4,7 +4,7 @@
 It gives you the list of movies from [this site](https://www.themoviedb.org/)  
 You can click on the movie and route to a separate screen with its core data,
 or you can search a movie you like.  
-Leider, for now, there's only local search, but I will surely add an API request for that or, rather, replace it with one soon enough
+Also it stores the data you already loaded, liked movies line, movie detail screen or search result, so later you can surf through what you already looked for offline
 
 ---
 
@@ -31,6 +31,12 @@ To get this app up and running, just clone the repository, and open MovieSearche
 
 
 <img src="/images/SearchRes1.jpeg" height="853" width="394"> <img src="/images/SearchRes2.jpeg" height="853" width="394">
+---
+
+```Offline Search```
+
+
+<img src="/images/SearchRes3.jpeg" height="853" width="394"> <img src="/images/SearchRes4.jpeg" height="853" width="394">
 
 ---
 
