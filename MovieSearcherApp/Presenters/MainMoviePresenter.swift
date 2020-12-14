@@ -231,14 +231,14 @@ class MainPresenter: MainViewPresenterProtocol {
         if text.trimmed == data.prevQuery.trimmed { return }
         
         data.resMovies.removeAll()
+        let query = text.trimmed.filter { !($0.isNewline || $0.isWhitespace) }.lowercased()
         let hasSearchRes = DefaultsManager.hasEntity(
             by: .searchMovieModel,
-            id: Utils.getString(from: 1, and: text))
+            id: Utils.getString(from: 1, and: query))
         localSearch = !inetOK && !hasSearchRes
         forSearch = true
         pages.resetPages()
         if !localSearch {
-            let query = text.trimmed.filter { !($0.isNewline || $0.isWhitespace) }.lowercased()
             fetchMovies(query: query) { (movies, error) in
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
