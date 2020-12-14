@@ -107,6 +107,7 @@ class DetailViewController: ErrorViewVC {
     @IBOutlet var bottomStackViews: [UIStackView]!
     @IBOutlet var bottomInfoLabels: [UILabel]!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var imageActivityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var upperViewHeightConstr: NSLayoutConstraint!
@@ -228,15 +229,22 @@ extension DetailViewController: DetailViewProtocol {
     }
     
     private func setupPosterImage(with viewModel: DetailViewModelProtocol?) {
-        posterImageView.image = posterImage
+        setPosterImage(posterImage)
         if let viewModel = viewModel,
            posterImage == nil {
             guard let posterPath = viewModel.posterPath else {
-                posterImageView.image = .getImage(for: .moviePosterPlaceholder)
+                setPosterImage(.getImage(for: .moviePosterPlaceholder))
                 return
             }
             let url = "\(Globals.posterBaseURL)\(posterPath)"
             posterImageView.sd_setImage(with: URL(string: url))
+        }
+    }
+    
+    private func setPosterImage(_ image: UIImage?) {
+        self.posterImageView.image = image
+        if image != nil {
+            imageActivityIndicator.stopAnimating()
         }
     }
     

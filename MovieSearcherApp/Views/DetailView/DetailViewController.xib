@@ -16,6 +16,7 @@
                 <outlet property="bottomContView" destination="Epl-LO-qYj" id="Imw-Ed-6v3"/>
                 <outlet property="contScrollView" destination="OVK-fs-8uw" id="kxQ-Fg-J9E"/>
                 <outlet property="genreDescLabel" destination="KkR-QY-gpv" id="wnj-bV-x9y"/>
+                <outlet property="imageActivityIndicator" destination="rwr-wt-IbP" id="LpN-me-Emf"/>
                 <outlet property="overviewDescLabel" destination="wUz-Hl-P3p" id="fvL-yk-E6F"/>
                 <outlet property="overviewSV" destination="eka-hY-pkZ" id="5Jd-dB-Bti"/>
                 <outlet property="posterImageView" destination="wqW-sB-9un" id="k1s-vk-eRY"/>
@@ -325,6 +326,10 @@
                         <constraint firstItem="Epl-LO-qYj" firstAttribute="top" secondItem="uy4-RW-tid" secondAttribute="bottom" constant="24" id="zWs-RG-cgn"/>
                     </constraints>
                 </scrollView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="rwr-wt-IbP">
+                    <rect key="frame" x="93.5" y="213" width="20" height="20"/>
+                    <color key="color" red="0.10000000000000001" green="0.64000000000000001" blue="0.93999999999999995" alpha="1" colorSpace="calibratedRGB"/>
+                </activityIndicatorView>
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Ts8-ex-Jrd">
                     <rect key="frame" x="197" y="443" width="20" height="20"/>
                     <color key="color" red="0.34901960780000002" green="0.59215686270000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -338,6 +343,8 @@
                 <constraint firstAttribute="bottom" secondItem="OVK-fs-8uw" secondAttribute="bottom" id="XJB-e1-cCE"/>
                 <constraint firstAttribute="top" secondItem="OVK-fs-8uw" secondAttribute="top" id="f88-LF-aLG"/>
                 <constraint firstItem="Ts8-ex-Jrd" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="nRQ-Sf-pyc"/>
+                <constraint firstItem="rwr-wt-IbP" firstAttribute="centerX" secondItem="wqW-sB-9un" secondAttribute="centerX" id="rt8-Qu-NO4"/>
+                <constraint firstItem="rwr-wt-IbP" firstAttribute="centerY" secondItem="wqW-sB-9un" secondAttribute="centerY" id="sxb-0d-YPh"/>
                 <constraint firstItem="Nvj-Ig-fmt" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.4" id="wZG-U5-cfr"/>
                 <constraint firstAttribute="trailing" secondItem="OVK-fs-8uw" secondAttribute="trailing" id="zNn-eA-W93"/>
             </constraints>
