@@ -228,9 +228,7 @@ class MainPresenter: MainViewPresenterProtocol {
             reloadWithUsualList()
             return
         }
-        if text.trimmed == data.prevQuery.trimmed {
-            return
-        }
+        if text.trimmed == data.prevQuery.trimmed { return }
         
         data.resMovies.removeAll()
         let hasSearchRes = DefaultsManager.hasEntity(
@@ -240,7 +238,8 @@ class MainPresenter: MainViewPresenterProtocol {
         forSearch = true
         pages.resetPages()
         if !localSearch {
-            fetchMovies(query: text) { (movies, error) in
+            let query = text.trimmed.filter { !($0.isNewline || $0.isWhitespace) }.lowercased()
+            fetchMovies(query: query) { (movies, error) in
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
                     let movies: [MovieModel]? = self.pages.maxLoadedPage > 2 ?

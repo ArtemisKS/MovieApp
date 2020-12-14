@@ -62,6 +62,19 @@ extension MainViewController: UISearchBarDelegate {
         setSearchQuery(nil)
         clearAndResign(searchBar)
     }
+    
+    func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
+        guard let searchBarText = searchBar.text else { return false }
+        if let textRange = Range(range, in: searchBarText) {
+            if range.length == 0 && text.trimmed.isEmpty {
+                return text == "\n"
+            }
+            let newText = searchBarText.replacingCharacters(in: textRange, with: text).trimmed
+            return !newText.trimmed.isEmpty
+        }
+        return false
+    }
 }
 
 extension MainViewController: UISearchResultsUpdating {
