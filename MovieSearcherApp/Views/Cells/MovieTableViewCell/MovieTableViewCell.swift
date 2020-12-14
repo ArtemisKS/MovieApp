@@ -38,8 +38,9 @@ extension MovieTableViewCell: ImageViewCell {
     }
     
     func setLoading(_ loading: Bool) {
-        cellImageView.isHidden = loading && cellImageView.image == nil
-        loading ?
+        let startLoading = loading && cellImageView.image == nil
+        cellImageView.isHidden = startLoading
+        startLoading ?
             activityIndicator.startAnimating() : activityIndicator.stopAnimating()
     }
     
