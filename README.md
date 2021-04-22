@@ -1,6 +1,6 @@
 # MovieApp
 
-## ```MovieApp``` is a movie searching app.
+## ```MovieApp``` is a movie searching app (done in 1.5 days as a test task, which is not that bad, if you think about it)
 It gives you the list of movies from [this site](https://www.themoviedb.org/)  
 You can click on the movie and route to a separate screen with its core data,
 or you can search a movie you like.  
